@@ -17,7 +17,34 @@
 </head>
 <body>
   <div class='container'>
-    
+    <main class="main" role="main">
+      <div class="toggle--container">
+        <button class="toggle" id="dark-mode" aria-describedby="darkMode" role="button" data-toggle></button>
+      </div>
+      <div class="music--player" id="musicPlayer" aria-describedby="musicPlayer" role="container">
+        <div class="outer--plate" id="outerPlate" aria-describedby="outerPlate" role="doc-cover">
+          <div class="inner--plate" id="innerPlate" aria-describedby="innerPlate" role="banner"></div>
+        </div>
+        <section class="feature--section" id="featureSection" aria-describedby="featureSection" role="contentinfo">
+          <p class="song--name" role="dialog">song name</p>
+          <p class="artist--name" role="dialog">artist name</p>
+        </section>
+      </div>
+      <div class="control--container" id="controlContainer" aria-describedby="controlContainer" role="complementary">
+        <div class="progress--bar" id="progressBar" aria-describedby="progressBar" role="progressbar" data-progress></div>
+        <span class="current--time timer" aria-current="time" role="timer" data-current-time>00:00</span>
+        <div class="controls" aria-describedby="controls" role="complementary">
+          <button class="rewind--btn btn" id="rewind" aria-describedby="rewind" role="button" data-rewind></button>
+          <button class="play--btn btn" id="playButton" aria-describedby="playButton" role="button" data-play></button>
+          <button class="forward--btn btn" id="forwardButton" aria-describedby="playButton" role="button" data-forward></button>
+          <div class="volume--container">
+            <button class="volume" data-volume></button>
+            <input class="slider" type="range" name="slider" min="0" max="100" id="slider" aria-describedby="slider" role="slider" data-slider>
+          </div>
+        </div>
+        <span class="duration timer" aria-current="time" role="timer" data-duration>00:00</span>
+      </div>
+    </main>
   </div>
   <script src='js/script.js'></script>
 </body>
