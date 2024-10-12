@@ -8,7 +8,7 @@
   <meta http-equiv='X-UA-Compatible' content='IE=edge'>
   <!-- Mobile Specific Metas -->
   <meta name='viewport' content='width=device-width, initial-scale=1.0'>
-  <title></title>
+  <title>Custom Music Playe</title>
   <!-- Fonts -->
   <link rel='stylesheet' href='https://fonts.googleapis.com/css2?family=Abel&family=Play&display=swap'>
   <!-- CSS -->
@@ -18,27 +18,53 @@
 <body>
   <div class='container'>
     <main class="main" role="main">
-      <div class="toggle--container">
-        <button class="toggle" id="dark-mode" aria-describedby="darkMode" role="button" data-toggle></button>
-      </div>
-      <div class="music--player" id="musicPlayer" aria-describedby="musicPlayer" role="container">
-        <div class="outer--plate" id="outerPlate" aria-describedby="outerPlate" role="doc-cover">
-          <div class="inner--plate" id="innerPlate" aria-describedby="innerPlate" role="banner"></div>
+      <header class="header">
+        <h2 class="logo">music<span>player</span></h2>
+        <div class="toggle--container">
+          <button class="toggle" id="dark-mode" aria-describedby="darkMode" role="button" data-toggle></button>
         </div>
-        <section class="feature--section" id="featureSection" aria-describedby="featureSection" role="contentinfo">
-          <p class="song--name" role="dialog">song name</p>
-          <p class="artist--name" role="dialog">artist name</p>
-        </section>
+      </header>
+      <div class="music--player">
+        <div class="turntable" id="turntable" aria-describedby="turntable" role="container">
+          <div class="outer--plate" id="outerPlate" aria-describedby="outerPlate" role="doc-cover">
+            <div class="inner--plate" id="innerPlate" aria-describedby="innerPlate" role="banner"></div>
+          </div>
+          <section class="feature--section" id="featureSection" aria-describedby="featureSection" role="contentinfo">
+            <p class="song--name" role="dialog">song name</p>
+            <p class="artist--name" role="dialog">artist name</p>
+          </section>
+        </div>
       </div>
       <div class="control--container" id="controlContainer" aria-describedby="controlContainer" role="complementary">
         <div class="progress--bar" id="progressBar" aria-describedby="progressBar" role="progressbar" data-progress></div>
         <span class="current--time timer" aria-current="time" role="timer" data-current-time>00:00</span>
         <div class="controls" aria-describedby="controls" role="complementary">
-          <button class="rewind--btn btn" id="rewind" aria-describedby="rewind" role="button" data-rewind></button>
-          <button class="play--btn btn" id="playButton" aria-describedby="playButton" role="button" data-play></button>
-          <button class="forward--btn btn" id="forwardButton" aria-describedby="playButton" role="button" data-forward></button>
+          <button class="rewind--btn btn" id="rewind" aria-describedby="rewind" role="button" data-skip="-10">
+            -10
+            <i class="fa fa-solid fa-backward"></i>
+          </button>
+          <div class="player--container">
+            <button class="chevron--left btn" id="chevron-left" aria-describedby="chevronLeft" role="button" data-backward>
+              <i class="fa fa-solid fa-chevron-left"></i>
+            </button>
+            <button class="play--btn btn" id="playButton" aria-describedby="playButton" role="button" data-play>
+              <i class="fa fa-solid fa-play"></i>
+            </button>
+            <button class="chevron--right btn" id="chevron-right" aria-describedby="chevronRight" role="button" data-forward>
+              <i class="fa fa-solid fa-chevron-right"></i>
+            </button>
+          </div>
+          <button class="forward--btn btn" id="forwardButton" aria-describedby="playButton" role="button" data-skip="+25">
+            <i class="fa fa-solid fa-forward"></i>
+            +25
+          </button>
+          <button class="repeat--btn btn" id="repeatButton" aria-describedby="repeatButton" role="button" data-repeat>
+            <i class="fa fa-solid fa-repeat"></i>
+          </button>
           <div class="volume--container">
-            <button class="volume" data-volume></button>
+            <button class="volume" data-volume>
+              <i class="fa fa-solid fa-volume-high"></i>
+            </button>
             <input class="slider" type="range" name="slider" min="0" max="100" id="slider" aria-describedby="slider" role="slider" data-slider>
           </div>
         </div>
