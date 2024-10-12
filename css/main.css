@@ -1,0 +1,218 @@
+:root {
+  --sz: 100%;
+  --vh: 100vh;
+  --pd: 1.25rem;
+  --rd: .5lh;
+  --unit: 5;
+  --fnt-sz: calc((var(--pd) * var(--unit)) / 4);
+  --fnt-play: 'Play', sans-serif;
+  --fnt-abel: 'Abel', sans-serif;
+  --black-color: #231d1d;
+  --white-color: #f7f8f9;
+  --light-blue-color: #2e8ce2;
+  --dark-red-color: #a8332b;
+  --dark-gray-color: #41474e;
+  --console-light-mode: linear-gradient(135deg, #274f77 0%, #2196f3 60%, #3787d7 100%);
+  --console-dark-mode: linear-gradient(-45deg, #274f77 98%, #1b364b 100%, #0b3865 100%);
+  --tone-arm-base-gradient-color: linear-gradient(45deg, #0a64ad 100%, #0874e0 100%);
+  --circle-light-mode: linear-gradient(45deg,#052e50 100%, #1176dd 100%);
+  --circle-dark-mode: linear-gradient(45deg,#164b77 100%, #0553a1 100%);
+  --bg-color: linear-gradient(90deg,#2196f3 15%, #f44336 100%);
+  --disk-gradient-color: linear-gradient(180deg, #1e1e1e 0%, #3a3232 60%, #534b4b 100%)
+}
+
+*,
+*::before,
+*::after { box-sizing: border-box; }
+
+:where(html, body, p, span) { margin: 0; }
+:where(button, input) { cursor: pointer; }
+:where(.player--container, .btn, .feature--section, .control--container, .controls, .header, .volume--container, .toggle--container, .outer--plate, .inner--plate) {
+  display: flex;
+  align-items: center;
+  justify-content: center
+}
+:where(.music--player, .turntable, .control--container) { position: relative; }
+:where(.feature--section, .progress--bar) { position: absolute; }
+
+p { 
+  color: var(--black-color);
+  text-transform: capitalize;
+}
+
+button {
+  padding: var(--rd);
+  background-color: transparent;
+  border: none;
+  color: var(--white-color)
+}
+
+[type="range"] {
+  width: calc((var(--pd) / 2) * var(--unit));
+  height: .2rem
+}
+
+.container {
+  display: block;
+  height: var(--vh);
+  overflow: hidden
+}
+
+.main {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: auto;
+  place-items: center;
+  background-image: var(--bg-color);
+  .header {
+    grid-row: span 2;
+    justify-content: space-between;
+    width: var(--sz);
+    padding-inline: calc(var(--pd) * 2);
+    .logo {
+      margin: var(--rd);
+      font-family: var(--fnt-play);
+      text-transform: capitalize;
+      color: var(--white-color);
+      & span {
+        display: inline-block;
+        font-family: var(--fnt-abel);
+        font-weight: 100;
+        &::first-letter {
+          text-transform: uppercase;
+          font-size: calc(var(--fnt-sz) * 1.5)
+        }
+      }
+    }
+    .toggle--container {
+      .toggle {
+        width: var(-sz);
+        min-width: 3.35rem;
+        height: calc(var(--pd) * 1.125);
+        position: relative;
+        background-color: var(--dark-red-color);
+        box-shadow: .125vmin .125vmin .125rem rgba(0, 0, 0, .5) inset, .125vmin -.125vmin .25rem rgba(102, 12, 5, 0.5) inset;
+        border-radius: 15rem;
+        &::before {
+          content: "";
+          width: calc(var(--pd) * 1.01);
+          height: calc(var(--pd) * 1.01);
+          position: absolute;
+          background-color: var(--white-color);
+          border-radius: var(--sz);
+          top: .05rem;
+          right: .15rem
+        }
+      }
+    }
+  }
+}
+
+.music--player {
+  grid-row: 3 / 5;
+  min-height: calc(var(--vh) * .74);
+  z-index: 2;
+  .turntable {
+    grid-row: 2;
+    width: 40rem;
+    height: 21rem;
+    background: var(--console-light-mode);
+    border-radius: calc(var(--rd) * 1.25);
+    box-shadow: -.35vmin -.35vmin .5rem rgba(0, 0, 0, .45) inset, 0 .35vmin .5vmin .025rem rgba(0, 0, 0, .45);
+    & :is(.outer--plate, .inner--plate) { border-radius: var(--sz) }
+    .outer--plate {
+      --outer: 23rem;
+      width: var(--outer);
+      height: var(--outer);
+      position: absolute;
+      background-color: var(--dark-gray-color);
+      bottom: -18%;
+      left: -10%;
+      box-shadow: 0 -.35vmin .235rem rgba(0, 0, 0, .45) inset, .5vmin .25vmin .5rem rgba(0, 0, 0, .45);
+      .inner--plate {
+        --inner: 22rem;
+        width: var(--inner);
+        height: var(--inner);
+        position: relative;
+        background-image: var(--disk-gradient-color);
+        box-shadow: -.35vmin -.125vmin .35rem 0 rgba(0, 0, 0, .275) inset, -.235vmin -.25vmin .5rem rgba(0, 0, 0, .375);
+        &::before {
+          content: "";
+          width: var(--pd);
+          height: var(--pd);
+          position: absolute;
+          background-color: var(--white-color);
+          border-radius: var(--sz);
+          box-shadow: .25vmin -.25vmin .45rem 0 rgba(10, 10, 10, .75) inset
+        }
+      }
+      /* z-index: 3 */
+    }
+    .feature--section {
+      align-items: flex-start;
+      flex-direction: column;
+      width: 26.3125rem;
+      height: 6rem;
+      padding-inline-start: calc(var(--pd) * 1.5);
+      background: var(--white-color);
+      bottom: -5.5rem;
+      right: 0;
+      border-radius: 0 0 calc(var(--rd) * 1.25) calc(var(--rd) * 1.25);
+      z-index: -1;
+      box-shadow: -.25vmin -.25vmin .5rem rgba(0, 0, 0, .45) inset;
+      .song--name { 
+        margin-block-end: calc(var(--rd) * .235); 
+        font: 800 calc(var(--fnt-sz) * .85) var(--fnt-play); 
+      }
+      .artist--name {
+        font: 300 calc(var(--fnt-sz) * .65) var(--fnt-abel)
+      }
+    }
+  }
+}
+
+.control--container {
+  grid-row: 5;
+  justify-content: space-between;
+  width: var(--sz);
+  max-width: 45.75rem;
+  padding-inline: var(--pd);
+  height: 5rem;
+  & span { 
+    font-family: var(--fnt-play);
+    letter-spacing: .05lh;
+    color: var(--black-color)
+  }
+  .progress--bar {
+    width: var(--sz);
+    height: 0.2625rem;
+    background: var(--white-color);
+    top: 0;
+    left: 0;
+    border-radius: calc(var(--rd) * 5)
+  }
+  .controls {
+    justify-content: space-around;
+    width: var(--sz);
+    max-width: 35rem;
+    .player--container {
+      justify-content: space-around;
+      width: calc(var(--sz) * .25);
+      .play--btn {
+        font-size: calc(var(--fnt-sz) * 1.5)
+      }
+      & :is(.chevron--right, .chevron--left) { font-size: var(--pd) }
+    }
+    & :is(.forward--btn, .rewind--btn) { font-size: calc(var(--pd) * .6); }
+    .rewind--btn { 
+      & .fa-backward { padding-inline-start: calc(var(--rd) * .5)}
+    }
+    .forward--btn {
+      & .fa-forward { padding-inline-end: calc(var(--rd) * .5)}
+    }
+    .repeat--btn { font-size: calc(var(--pd) * .8); }
+    .volume--container {
+      .slider { margin-block: auto; }
+    }
+  }
+}
