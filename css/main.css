@@ -7,17 +7,17 @@
   --fnt-sz: calc((var(--pd) * var(--unit)) / 4);
   --fnt-play: 'Play', sans-serif;
   --fnt-abel: 'Abel', sans-serif;
-  --black-color: #231d1d;
+  --black-color: #1f1f20;
   --white-color: #f7f8f9;
+  --gray-color: #9DA0A5;
   --light-blue-color: #2e8ce2;
   --dark-red-color: #a8332b;
   --dark-gray-color: #41474e;
   --console-light-mode: linear-gradient(135deg, #274f77 0%, #2196f3 60%, #3787d7 100%);
   --console-dark-mode: linear-gradient(-45deg, #274f77 98%, #1b364b 100%, #0b3865 100%);
-  --tone-arm-base-gradient-color: linear-gradient(45deg, #0a64ad 100%, #0874e0 100%);
-  --circle-light-mode: linear-gradient(45deg,#052e50 100%, #1176dd 100%);
+  --tone-arm-base-gradient-color: linear-gradient(-135deg, #0a64ad 0%, #0874e0 100%);
+  --circle-light-mode: linear-gradient(-135deg,#052e50 10%, #1176dd 70%);
   --circle-dark-mode: linear-gradient(45deg,#164b77 100%, #0553a1 100%);
-  --bg-color: linear-gradient(90deg,#2196f3 15%, #f44336 100%);
   --disk-gradient-color: linear-gradient(180deg, #1e1e1e 0%, #3a3232 60%, #534b4b 100%)
 }
 
@@ -27,13 +27,13 @@
 
 :where(html, body, p, span) { margin: 0; }
 :where(button, input) { cursor: pointer; }
-:where(.player--container, .btn, .feature--section, .control--container, .controls, .header, .volume--container, .toggle--container, .outer--plate, .inner--plate) {
+:where(.flex) {
   display: flex;
   align-items: center;
   justify-content: center
 }
 :where(.music--player, .turntable, .control--container) { position: relative; }
-:where(.feature--section, .progress--bar) { position: absolute; }
+:where(.feature--section, .progress--bar, .icon) { position: absolute; }
 
 p { 
   color: var(--black-color);
@@ -42,7 +42,7 @@ p {
 
 button {
   padding: var(--rd);
-  background-color: transparent;
+  background: transparent;
   border: none;
   color: var(--white-color)
 }
@@ -63,9 +63,10 @@ button {
   grid-template-columns: 1fr;
   grid-template-rows: auto;
   place-items: center;
-  background-image: var(--bg-color);
+  height: var(--sz);
+  background: url('../assets/images/light-bg-theme.png') center / cover, no-repeat;
   .header {
-    grid-row: span 2;
+    grid-row: 1;
     justify-content: space-between;
     width: var(--sz);
     padding-inline: calc(var(--pd) * 2);
@@ -90,7 +91,7 @@ button {
         min-width: 3.35rem;
         height: calc(var(--pd) * 1.125);
         position: relative;
-        background-color: var(--dark-red-color);
+        background: var(--dark-red-color);
         box-shadow: .125vmin .125vmin .125rem rgba(0, 0, 0, .5) inset, .125vmin -.125vmin .25rem rgba(102, 12, 5, 0.5) inset;
         border-radius: 15rem;
         &::before {
@@ -98,7 +99,7 @@ button {
           width: calc(var(--pd) * 1.01);
           height: calc(var(--pd) * 1.01);
           position: absolute;
-          background-color: var(--white-color);
+          background: var(--white-color);
           border-radius: var(--sz);
           top: .05rem;
           right: .15rem
@@ -115,7 +116,7 @@ button {
   .turntable {
     grid-row: 2;
     width: 40rem;
-    height: 21rem;
+    height: 21.5rem;
     background: var(--console-light-mode);
     border-radius: calc(var(--rd) * 1.25);
     box-shadow: -.35vmin -.35vmin .5rem rgba(0, 0, 0, .45) inset, 0 .35vmin .5vmin .025rem rgba(0, 0, 0, .45);
@@ -125,7 +126,7 @@ button {
       width: var(--outer);
       height: var(--outer);
       position: absolute;
-      background-color: var(--dark-gray-color);
+      background: var(--dark-gray-color);
       bottom: -18%;
       left: -10%;
       box-shadow: 0 -.35vmin .235rem rgba(0, 0, 0, .45) inset, .5vmin .25vmin .5rem rgba(0, 0, 0, .45);
@@ -134,19 +135,95 @@ button {
         width: var(--inner);
         height: var(--inner);
         position: relative;
-        background-image: var(--disk-gradient-color);
+        overflow: hidden;
+        background: var(--disk-gradient-color);
         box-shadow: -.35vmin -.125vmin .35rem 0 rgba(0, 0, 0, .275) inset, -.235vmin -.25vmin .5rem rgba(0, 0, 0, .375);
         &::before {
           content: "";
           width: var(--pd);
           height: var(--pd);
           position: absolute;
-          background-color: var(--white-color);
+          background: var(--white-color);
           border-radius: var(--sz);
           box-shadow: .25vmin -.25vmin .45rem 0 rgba(10, 10, 10, .75) inset
         }
       }
-      /* z-index: 3 */
+    }
+    .outer--base {
+      --base: 4.25rem;
+      width: var(--base);
+      height: var(--base);
+      background: var(--tone-arm-base-gradient-color);
+      position: absolute;
+      bottom: calc(var(--base) * .5);
+      right: calc(var(--base) * .7);
+      border-radius: calc(var(--rd) * .5);
+      box-shadow: -.5vmin -.5vmin .5rem rgba(0, 0, 0, .35) inset, .15vmin .15vmin .25rem rgba(0, 0, 0, .2) inset;
+      .inner--base {
+        --base: 2.75rem;
+        width: var(--base);
+        height: var(--base);
+        background: var(--circle-light-mode);
+        border-radius: var(--sz);
+        box-shadow: -.15vmin -.05vmin .125rem rgba(0, 0, 0, .35) inset;
+        position: relative;
+        isolation: isolete;
+        &::before {
+          content: "";
+          width: 1rem;
+          height: 1rem;
+          position: absolute;
+          inset: 50%;
+          transform: translate(-50%, -50%);
+          background: var(--white-color);
+          border-radius: var(--sz);
+          box-shadow: -.5vmin -.05vmin .15rem rgba(0, 0, 0, .35) inset, .15vmin .25vmin .25rem rgba(0, 0, 0, .75);
+          z-index: 2;
+        }
+        .tonearm--container {
+          position: absolute;
+          width: var(--base);
+          height: var(--base);
+          transform: rotate(45deg);
+          .tone--arm {
+            width: calc(var(--fnt-sz) * 12.75);
+            height: calc(var(--rd) * 4);
+            position: absolute;
+            top: 50%;
+            left: 0%;
+            transform: translate(-90%, -40%);
+            transform-origin: center bottom;
+            border-radius: 50%;
+            border: var(--rd) solid transparent;
+            border-top-color: var(--black-color);
+            &::before,
+            &::after {
+              content: "";
+              width: calc(var(--pd)* 2.35);
+              height: calc(var(--fnt-sz)* 2.35);
+              position: absolute;
+              border-radius: 55%;
+              border: 1.25rem solid transparent;
+              
+            }
+            &::before {
+              bottom: -95%;
+              left: 94%;
+              border-right-color: var(--gray-color)
+            }
+            &::after {
+              width: calc(var(--fnt-sz)* 3);
+              height: calc(var(--pd) * 1.12);
+              top: 35%;
+              left: -15%;
+              transform: rotate(-25deg);
+              border: 1rem solid transparent;
+              border-top-color: var(--gray-color);
+              border-radius: 0;
+            }
+          }
+        }
+      }
     }
     .feature--section {
       align-items: flex-start;
@@ -175,7 +252,7 @@ button {
   grid-row: 5;
   justify-content: space-between;
   width: var(--sz);
-  max-width: 45.75rem;
+  max-width: 48.75rem;
   padding-inline: var(--pd);
   height: 5rem;
   & span { 
@@ -185,7 +262,7 @@ button {
   }
   .progress--bar {
     width: var(--sz);
-    height: 0.2625rem;
+    height: 0.25rem;
     background: var(--white-color);
     top: 0;
     left: 0;
