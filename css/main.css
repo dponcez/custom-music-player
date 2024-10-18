@@ -22,7 +22,7 @@
 }
 
 *,
-*::before,
+*::before,                               
 *::after { box-sizing: border-box; }
 
 :where(html, body, p, span) { margin: 0; }
