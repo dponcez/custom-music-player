@@ -5,17 +5,17 @@ export const template = () => {
     <header class="header flex">
         <h2 class="logo">music<span>player</span></h2>
         <div class="toggle--container flex">
-          <button class="toggle" id="dark-mode" aria-describedby="darkMode" role="button" data-dark-mode></button>
+          <button class="toggle inactive" id="dark-mode" aria-describedby="darkMode" role="button" data-dark-mode></button>
         </div>
       </header>
       <div class="music--player">
-        <div class="turntable" id="turntable" aria-describedby="turntable" role="container">
+        <div class="turntable mode" id="turntable" aria-describedby="turntable" role="container">
           <audio data-audio></audio>
           <div class="outer--plate flex" data-rotate>
             <div class="inner--plate flex" id="innerPlate" aria-describedby="innerPlate" role="banner" data-poster>
             </div>
           </div>
-          <div class="outer--base flex">
+          <div class="outer--base mode flex">
             <div class="inner--base flex">
               <div class="tonearm--container" id="tonearmContainer" aria-describedby="tonearmContainer" data-tonearm>
                 <div class="tone--arm" id="tonearm" aria-describedby="tonearm"></div>
@@ -32,7 +32,7 @@ export const template = () => {
         <div class="progress--bar" id="progressBar" aria-describedby="progressBar" role="progressbar" data-progress-bar>
           <div class="progress" id="progress" aria-describedby="progress" role="progressbar" data-progress></div>
         </div>
-        <span class="current--time timer" aria-current="time" role="timer" data-current-time>00:00</span>
+        <span class="current--time timer inactive" aria-current="time" role="timer" data-current-time>00:00</span>
         <div class="controls flex" aria-describedby="controls" role="complementary">
           <button class="rewind--btn btn flex" id="rewind" aria-describedby="rewind" role="button" data-skip="-10">
             -10
@@ -63,7 +63,7 @@ export const template = () => {
             <input class="slider" type="range" name="slider" min="0" max="100" id="slider" aria-describedby="slider" role="slider" data-slider>
           </div>
         </div>
-        <span class="duration timer" aria-current="time" role="timer" data-duration>00:00</span>
+        <span class="duration timer inactive" aria-current="time" role="timer" data-duration>00:00</span>
       </div>
   `;
 }
