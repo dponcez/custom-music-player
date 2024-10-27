@@ -9,15 +9,16 @@
   --fnt-abel: 'Abel', sans-serif;
   --black-color: #1f1f20;
   --white-color: #f7f8f9;
-  --gray-color: #9DA0A5;
+  --gray-color: #9da0a5;
   --light-blue-color: #2e8ce2;
   --dark-red-color: #a8332b;
   --dark-gray-color: #41474e;
-  --console-light-mode: linear-gradient(135deg, #274f77 0%, #2196f3 60%, #3787d7 100%);
-  --console-dark-mode: linear-gradient(-45deg, #274f77 98%, #1b364b 100%, #0b3865 100%);
-  --tone-arm-base-gradient-color: linear-gradient(-135deg, #0a64ad 0%, #0874e0 100%);
-  --circle-light-mode: linear-gradient(-135deg,#052e50 10%, #1176dd 70%);
-  --circle-dark-mode: linear-gradient(45deg,#164b77 100%, #0553a1 100%);
+  --dark-blue-color: #1f313c;
+  --turntable-light-mode: linear-gradient(135deg, #274f77 0%, #2196f3 60%, #3787d7 100%);
+  --turntable-dark-mode: linear-gradient(135deg, #274f77 0%, #1b364b 60%, #0b3865 100%);
+  --base-light-mode: linear-gradient(-135deg, #0a64ad 0%, #0874e0 100%);
+  --base-dark-mode: linear-gradient(-135deg,#164b77 0%, #0553a1 70%);
+  --inner-base-color: linear-gradient(-135deg,#052e50 0%, #1176dd 70%);
   --disk-gradient-color: linear-gradient(180deg, #1e1e1e 0%, #3a3232 60%, #534b4b 100%)
 }
 
@@ -61,12 +62,13 @@ button {
 .main {
   display: grid;
   grid-template-columns: 1fr;
-  grid-template-rows: auto;
+  grid-template-rows: auto 1fr auto;
   place-items: center;
-  height: var(--sz);
+  height: 100dvh;
   background: url('../assets/images/light-bg-theme.png') center / cover, no-repeat;
+  gap: calc(var(--rd) * .75);
+  &.dark { background: url('../assets/images/dark-bg-theme.png') center / cover, no-repeat }
   .header {
-    grid-row: 1;
     justify-content: space-between;
     width: var(--sz);
     padding-inline: calc(var(--pd) * 2);
@@ -87,13 +89,17 @@ button {
     }
     .toggle--container {
       .toggle {
-        width: var(-sz);
+        width: var(--sz);
         min-width: 3.35rem;
         height: calc(var(--pd) * 1.125);
         position: relative;
         background: var(--dark-red-color);
         box-shadow: .125vmin .125vmin .125rem rgba(0, 0, 0, .5) inset, .125vmin -.125vmin .25rem rgba(102, 12, 5, 0.5) inset;
         border-radius: 15rem;
+        &.active { 
+          background: var(--dark-blue-color);
+          box-shadow: .125vmin .125vmin .125rem rgba(0, 0, 0, .5) inset, .125vmin -.125vmin .125rem rgba(236, 234, 234, 0.25) inset;
+        }
         &::before {
           content: "";
           width: calc(var(--pd) * 1.01);
@@ -102,7 +108,14 @@ button {
           background: var(--white-color);
           border-radius: var(--sz);
           top: .05rem;
-          right: .15rem
+          right: .15rem;
+          transition: 200ms right cubic-bezier(0.075, 0.82, 0.165, 1);
+        }
+        &.active::before {
+          background: var(--light-blue-color);
+          top: .05rem;
+          left: .1rem;
+          transition: 200ms left cubic-bezier(0.165, 0.84, 0.44, 1)
         }
       }
     }
@@ -110,16 +123,16 @@ button {
 }
 
 .music--player {
-  grid-row: 3 / 5;
   min-height: calc(var(--vh) * .74);
   z-index: 2;
   .turntable {
     grid-row: 2;
     width: 40rem;
     height: 21.5rem;
-    background: var(--console-light-mode);
+    background: var(--turntable-light-mode);
     border-radius: calc(var(--rd) * 1.25);
     box-shadow: -.35vmin -.35vmin .5rem rgba(0, 0, 0, .45) inset, 0 .35vmin .5vmin .025rem rgba(0, 0, 0, .45);
+    &.dark { background: var(--turntable-dark-mode) }
     & :is(.outer--plate, .inner--plate) { border-radius: var(--sz) }
     .outer--plate {
       --outer: 23rem;
@@ -156,17 +169,18 @@ button {
       --base: 4.25rem;
       width: var(--base);
       height: var(--base);
-      background: var(--tone-arm-base-gradient-color);
+      background: var(--base-light-mode);
       position: absolute;
       bottom: calc(var(--base) * .5);
       right: calc(var(--base) * .7);
       border-radius: calc(var(--rd) * .5);
       box-shadow: -.5vmin -.5vmin .5rem rgba(0, 0, 0, .35) inset, .15vmin .15vmin .25rem rgba(0, 0, 0, .2) inset;
+      &.dark { background: var(--base-dark-mode); }
       .inner--base {
         --base: 2.75rem;
         width: var(--base);
         height: var(--base);
-        background: var(--circle-light-mode);
+        background: var(--inner-base-color);
         border-radius: var(--sz);
         box-shadow: -.15vmin -.05vmin .125rem rgba(0, 0, 0, .35) inset;
         position: relative;
@@ -256,7 +270,6 @@ button {
 }
 
 .control--container {
-  grid-row: 5;
   justify-content: space-between;
   width: var(--sz);
   max-width: 48.75rem;
@@ -265,7 +278,8 @@ button {
   & span { 
     font-family: var(--fnt-play);
     letter-spacing: .05lh;
-    color: var(--black-color)
+    color: var(--black-color);
+    &.active { color: var(--white-color); }
   }
   .progress--bar {
     width: var(--sz);
