@@ -8,7 +8,6 @@ import { formatTime } from "../utils/formatTime.js";
 export const player = () => {
 
   const htmlRefs = {
-    darkModeToggle: selector('[data-dark-mode]'),
     outerPlate: selector('[data-rotate]'),
     cover: selector('[data-poster]'),
     tonearm: selector('[data-tonearm]'),
@@ -17,8 +16,8 @@ export const player = () => {
     songName: selector('[data-song-name]'),
     progressBar: selector('[data-progress-bar]'),
     progress: selector('[data-progress]'),
-    currentTime: selector('[data-current]'),
-    durationTime: selector('[data-duration]'),
+    currentTxt: selector('[data-current-time]'),
+    durationTxt: selector('[data-duration]'),
     skipBtns: selectorAll('[data-skip]'),
     backwardBtn: selector('[data-backward]'),
     playBtn: selector('[data-play]'),
@@ -30,7 +29,6 @@ export const player = () => {
   }
 
   const {
-    darkModeToggle,
     outerPlate,
     cover,
     tonearm,
@@ -39,8 +37,8 @@ export const player = () => {
     songName,
     progressBar,
     progress,
-    currentTime,
-    durationTime,
+    currentTxt,
+    durationTxt,
     skipBtns,
     backwardBtn,
     playBtn,
@@ -56,7 +54,9 @@ export const player = () => {
     pause: '<i class="fa-solid fa-pause"></i>',
     repeat: '<i class="fa-solid fa-repeat"></i>',
     repeateOne: '',
-    shuffle: '<i class="fa-solid fa-shuffle>"</i>'
+    shuffle: '<i class="fa-solid fa-shuffle"></i>',
+    off: '<i class="fa-solid fa-volume-xmark"></i>',
+    high: '<i class="fa-solid fa-volume-high"></i>'
   }
 
   const {
@@ -64,12 +64,16 @@ export const player = () => {
     pause,
     repeat,
     repeatOne,
-    shuffle
+    shuffle,
+    off,
+    high
   } = icons
 
   let index = 0;
   let playlist;
   let isPlaying = false;
+  let mousedown = false;
+  let isMute = false;
 
   const fetchData = async () => {
     const requestURL = '../json/index.json';
@@ -133,6 +137,7 @@ export const player = () => {
 
     if(index < 0) playlist.length - 1;
     audio.currentTime = 0;
+    progress.style.width = 0;
 
     loadCurrentSong(playlist[index]);
     playSong()
@@ -143,24 +148,58 @@ export const player = () => {
 
     if(index > playlist.length - 1) index = 0;
     audio.currentTime = 0;
+    progress.style.width = 0;
 
     loadCurrentSong(playlist[index]);
     playSong()
   }
 
-  const setTimeUpdate = (e) => {
+  const handleMuteSong = () => {
+    const isMuted = audio.muted ? audio.muted = false : audio.muted = true;
+
+    if(!isMuted){
+      volumeBtn.innerHTML = high;
+      slider.value = 50;
+      isMute = true
+    }else{
+      volumeBtn.innerHTML = off;
+      slider.value = 0;
+      isMute = false
+    }
+  }
+
+  const handleVolumeSlider = () => audio.volume = slider.value / 100;
+
+  const seekTimeUpdate = (e) => {
     const { currentTime, duration } = e.srcElement;
     const percent = ( currentTime / duration ) * 100;
-    progress.style.width = `${percent}%`
+    progress.style.width = `${percent}%`;
+
+    const curTime = audio.currentTime;
+    const durTime = audio.duration;
+
+    currentTxt.innerText = `0${formatTime(curTime)}`;
+    durationTxt.innerText = `0${formatTime(durTime)}`;
   }
 
   const updateProgressBar = (e) => {
-    const width = e.offsetWidth;
+    const width = progressBar.offsetWidth;
     const offset = e.offsetX;
     const duration = audio.duration;
 
     audio.currentTime = (offset / width) * duration;
   }
+
+  // rewind or fast forward the current song
+  skipBtns.forEach(skip => {
+    eventHandler(skip, 'click', () => {
+      const suffix = skip.dataset.skip;
+      if(suffix === '-10') audio.currentTime -= 10
+
+      if(suffix === '+25') audio.currentTime += 25
+    })
+  })
+
 
   let timeout = 300;
 
@@ -168,6 +207,12 @@ export const player = () => {
   eventHandler(playBtn, 'click', debounce(() => handlePlaySong()), timeout);
   eventHandler(forwardBtn, 'click', debounce(() => handleNextSong()), timeout);
   eventHandler(backwardBtn, 'click', debounce(() => handlePrevSong()), timeout);
-  eventHandler(audio, 'timeupdate', setTimeUpdate);
-  eventHandler(progressBar, 'click', updateProgressBar)
+  eventHandler(volumeBtn, 'click', debounce(() => handleMuteSong()), timeout);
+  eventHandler(audio, 'timeupdate', seekTimeUpdate);
+  eventHandler(progressBar, 'click', updateProgressBar);
+  eventHandler(progressBar, 'mousemove', debounce((e) => mousedown && updateProgressBar(e)), timeout);
+  eventHandler(progressBar, 'mousedown', debounce(() => mousedown = true), timeout);
+  eventHandler(progressBar, 'mouseup', debounce(() => mousedown = false), timeout);
+  eventHandler(slider, 'mousemove', debounce(() => handleVolumeSlider()), timeout);
+  eventHandler(slider, 'change', debounce(() => handleVolumeSlider()), timeout);
 }
