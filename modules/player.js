@@ -52,28 +52,31 @@ export const player = () => {
   const icons = {
     play: '<i class="fa-solid fa-play"></i>',
     pause: '<i class="fa-solid fa-pause"></i>',
-    repeat: '<i class="fa-solid fa-repeat"></i>',
+    repeatAll: '<i class="fa-solid fa-repeat"></i>',
     repeateOne: '',
     shuffle: '<i class="fa-solid fa-shuffle"></i>',
-    off: '<i class="fa-solid fa-volume-xmark"></i>',
+    low: '<i class="fa-solid fa-volume-xmark"></i>',
     high: '<i class="fa-solid fa-volume-high"></i>'
   }
 
   const {
     play,
     pause,
-    repeat,
+    repeatAll,
     repeatOne,
     shuffle,
-    off,
+    low,
     high
   } = icons
 
   let index = 0;
+  let timeout = 300;
   let playlist;
   let isPlaying = false;
+  let isShuffle = false;
   let mousedown = false;
   let isMute = false;
+  const getCurrentSong = [];
 
   const fetchData = async () => {
     const requestURL = '../json/index.json';
@@ -82,7 +85,7 @@ export const player = () => {
       const json = await response.json();
       playlist = json
       loadCurrentSong(playlist[index])
-    } catch (error) {
+    } catch(error) {
       log(`Failure to load data: ${error}`)
     }
   }
@@ -98,6 +101,7 @@ export const player = () => {
       songName.innerText = `${title}`;
 
       audio.src = `${song}`;
+      audio.load();
     } catch(error) {
       log(`Failure to parse the data: ${error}`)
     }
@@ -123,7 +127,7 @@ export const player = () => {
   };
 
   const handlePlaySong = () => {
-    if(!isPlaying){
+    if(!isPlaying) {
       isPlaying = true;
       playSong()
     }else {
@@ -135,40 +139,63 @@ export const player = () => {
   const handlePrevSong = () => {
     index--;
 
-    if(index < 0) playlist.length - 1;
-    audio.currentTime = 0;
-    progress.style.width = 0;
+    if(!isShuffle) {
+      isShuffle = true;
 
-    loadCurrentSong(playlist[index]);
-    playSong()
+      if(index < 0) playlist.length - 1;
+      audio.currentTime = 0;
+      progress.style.width = 0;
+      
+      loadCurrentSong(playlist[index]);
+      playSong()
+    }else {
+      isShuffle = false;
+      chooseRandomMusic()
+    }
+
   }
 
   const handleNextSong = () => {
     index++;
 
-    if(index > playlist.length - 1) index = 0;
-    audio.currentTime = 0;
-    progress.style.width = 0;
+    if(!isShuffle) {
+      isShuffle = true;
 
-    loadCurrentSong(playlist[index]);
-    playSong()
+      if(index > playlist.length - 1) index = 0;
+      audio.currentTime = 0;
+      progress.style.width = 0;
+
+      loadCurrentSong(playlist[index]);
+      playSong()
+    }else {
+      isShuffle = false;
+      chooseRandomMusic()
+    }
+
   }
 
   const handleMuteSong = () => {
     const isMuted = audio.muted ? audio.muted = false : audio.muted = true;
 
-    if(!isMuted){
+    if(!isMuted && !isMute) {
       volumeBtn.innerHTML = high;
       slider.value = 50;
       isMute = true
-    }else{
-      volumeBtn.innerHTML = off;
+    }else {
+      volumeBtn.innerHTML = low;
       slider.value = 0;
       isMute = false
     }
   }
 
-  const handleVolumeSlider = () => audio.volume = slider.value / 100;
+  const handleVolumeSlider = () => {
+    audio.volume = slider.value / 100;
+
+    (slider.value === '0') ? 
+      volumeBtn.innerHTML = low :
+      volumeBtn.innerHTML = high;
+    
+  };
 
   const seekTimeUpdate = (e) => {
     const { currentTime, duration } = e.srcElement;
@@ -178,8 +205,8 @@ export const player = () => {
     const curTime = audio.currentTime;
     const durTime = audio.duration;
 
-    currentTxt.innerText = `0${formatTime(curTime)}`;
-    durationTxt.innerText = `0${formatTime(durTime)}`;
+    currentTxt.innerText = `0${formatTime(Number(curTime))}`;
+    durationTxt.innerText = `0${formatTime(Number(durTime))}`;
   }
 
   const updateProgressBar = (e) => {
@@ -198,21 +225,57 @@ export const player = () => {
 
       if(suffix === '+25') audio.currentTime += 25
     })
-  })
+  });
 
+  const chooseRandomMusic = () => {
+    const getRandomIndex = Math.floor(Math.random() * playlist.length);
+    const randomMusic = playlist[getRandomIndex];
 
-  let timeout = 300;
+    audio.currentTime = 0;
+    progress.style.width = 0;
 
+    loadCurrentSong(randomMusic);
+    playSong();
+  };
+
+  const playCurrentSong = () => {
+    const getRandomIndex = Math.floor(Math.random() * playlist.length);
+    const randomMusic = playlist[getRandomIndex];
+
+    if(getCurrentSong.includes(randomMusic)) {
+      return chooseRandomMusic();
+    }else {
+      getCurrentSong.push(randomMusic);
+      loadCurrentSong(randomMusic);
+    }
+  };
+
+  const selectRandomMusic = () => {
+    if(!isShuffle) {
+      isShuffle = true;
+      repeatBtn.innerHTML = repeatAll
+      playSong()
+    }else {
+      isShuffle = false;
+      repeatBtn.innerHTML = shuffle;
+      chooseRandomMusic();
+    }
+  }
+  
   // events
   eventHandler(playBtn, 'click', debounce(() => handlePlaySong()), timeout);
   eventHandler(forwardBtn, 'click', debounce(() => handleNextSong()), timeout);
   eventHandler(backwardBtn, 'click', debounce(() => handlePrevSong()), timeout);
+  eventHandler(repeatBtn, 'click', debounce(() => selectRandomMusic()), timeout);
   eventHandler(volumeBtn, 'click', debounce(() => handleMuteSong()), timeout);
-  eventHandler(audio, 'timeupdate', seekTimeUpdate);
+
   eventHandler(progressBar, 'click', updateProgressBar);
   eventHandler(progressBar, 'mousemove', debounce((e) => mousedown && updateProgressBar(e)), timeout);
   eventHandler(progressBar, 'mousedown', debounce(() => mousedown = true), timeout);
   eventHandler(progressBar, 'mouseup', debounce(() => mousedown = false), timeout);
-  eventHandler(slider, 'mousemove', debounce(() => handleVolumeSlider()), timeout);
   eventHandler(slider, 'change', debounce(() => handleVolumeSlider()), timeout);
+
+  eventHandler(audio, 'timeupdate', seekTimeUpdate);
+  eventHandler(audio, 'loadedmetadata', seekTimeUpdate);
+  eventHandler(audio, 'ended', debounce(() => handleNextSong()))
 }
