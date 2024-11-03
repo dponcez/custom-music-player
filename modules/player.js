@@ -53,7 +53,7 @@ export const player = () => {
     play: '<i class="fa-solid fa-play"></i>',
     pause: '<i class="fa-solid fa-pause"></i>',
     repeatAll: '<i class="fa-solid fa-repeat"></i>',
-    repeateOne: '',
+    repeateOne: '../assets/icons/repeat-1.svg',
     shuffle: '<i class="fa-solid fa-shuffle"></i>',
     low: '<i class="fa-solid fa-volume-xmark"></i>',
     high: '<i class="fa-solid fa-volume-high"></i>'
