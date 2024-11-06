@@ -53,7 +53,6 @@ export const player = () => {
     play: '<i class="fa-solid fa-play"></i>',
     pause: '<i class="fa-solid fa-pause"></i>',
     repeatAll: '<i class="fa-solid fa-repeat"></i>',
-    repeateOne: '../assets/icons/repeat-1.svg',
     shuffle: '<i class="fa-solid fa-shuffle"></i>',
     low: '<i class="fa-solid fa-volume-xmark"></i>',
     high: '<i class="fa-solid fa-volume-high"></i>'
@@ -63,7 +62,6 @@ export const player = () => {
     play,
     pause,
     repeatAll,
-    repeatOne,
     shuffle,
     low,
     high
@@ -76,7 +74,6 @@ export const player = () => {
   let isShuffle = false;
   let mousedown = false;
   let isMute = false;
-  const getCurrentSong = [];
 
   const fetchData = async () => {
     const requestURL = '../json/index.json';
@@ -113,7 +110,6 @@ export const player = () => {
     featureContainer.classList.add('visible');
 
     playBtn.innerHTML = pause;
-
     audio.play()
   }
 
@@ -178,13 +174,13 @@ export const player = () => {
     const isMuted = audio.muted ? audio.muted = false : audio.muted = true;
 
     if(!isMuted && !isMute) {
+      isMute = true;
       volumeBtn.innerHTML = high;
       slider.value = 50;
-      isMute = true
     }else {
+      isMute = false;
       volumeBtn.innerHTML = low;
       slider.value = 0;
-      isMute = false
     }
   }
 
@@ -236,18 +232,6 @@ export const player = () => {
 
     loadCurrentSong(randomMusic);
     playSong();
-  };
-
-  const playCurrentSong = () => {
-    const getRandomIndex = Math.floor(Math.random() * playlist.length);
-    const randomMusic = playlist[getRandomIndex];
-
-    if(getCurrentSong.includes(randomMusic)) {
-      return chooseRandomMusic();
-    }else {
-      getCurrentSong.push(randomMusic);
-      loadCurrentSong(randomMusic);
-    }
   };
 
   const selectRandomMusic = () => {
