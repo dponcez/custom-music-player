@@ -5,13 +5,13 @@
 
 ## Technologies
 
-- HTML
-- CSS
-- JavaScript
+- [HTML](https://developer.mozilla.org/en-US/docs/Web/HTML)
+- [CSS](https://developer.mozilla.org/en-US/docs/Web/CSS)
+- [JavaScript](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
 
 ## Development Environment
 
-- VSCode
+- [VSCode](https://code.visualstudio.com)
 
 ### Project Structure
 
@@ -19,33 +19,8 @@
 └── 📁custom-music-player
     └── 📁assets
         └── 📁audio
-            └── 21-questions.mp3
-            └── all-eyez-on-me.mp3
-            └── all-the-stars.mp3
-            └── finally.mp3
-            └── go-crazy.mp3
-            └── good-things.mp3
-            └── private-show.mp3
-            └── regulate.mp3
-            └── shot-clock.mp3
-            └── slippin.mp3
         └── 📁figma
-            └── mockup-dark-mode.png
-            └── mockup-light-mode.png
-            └── wireframe.png
         └── 📁images
-            └── dark-bg-theme.png
-            └── light-bg-theme.png
-            └── poster-1.png
-            └── poster-10.png
-            └── poster-2.png
-            └── poster-3.png
-            └── poster-4.png
-            └── poster-5.png
-            └── poster-6.png
-            └── poster-7.png
-            └── poster-8.png
-            └── poster-9.png
     └── 📁css
         └── main.css
     └── 📁hooks
@@ -67,9 +42,22 @@
     └── README.md
 ```
 
-### JSDoc
+### ¿What is JSDoc?
 
-_JavaScript Documentation_ or (_JSDoc_) is a JavaScript documentation that uses tags to describe additional information about parameters and their return value, like so.
+[JSDoc](https://jsdoc.app) is a JavaScript documentation that uses tags to describe additional information about parameters and their return value, also a powerful tool for documenting JavaScript code.
+
+Not only do they help other developers understand how to use your code, but they can also be used to generate automatic documentation.
+
+Some of the advantages of using JSDoc tags are:
+
+- Improves code readability.
+- Makes the code easier to understand to other developers.
+- Allows automatic documentation generation.
+- Helps detect errors and inconsistencies in the code.
+- Improve team collaboration.
+<small style="font-size: .65rem">[META]</small>
+
+Some of the most common JSDoc tags are: 
 
 - __@function__ is a tag used to refers to a function.
 - __@description__ is a tag used to indicates a detailed infomation about a function.
@@ -97,7 +85,6 @@ __Explanation__
 - @param: indicates that a parameter is being described.
 - { type }: specifies the data type of parameter, for example (string, number, object) etc.
 - nameOfParam: is the name of parameter.
-- description: a brief description of the purpose of the parameter.
 
 __Example__
 
@@ -117,6 +104,8 @@ __Example__
 ```
 
 The following functions described below use JSDoc tags to discribe the purpose of each function and the parameters these function receive.
+
+The JSDoc is not available in the examples below, but you can see them in the repository.
 
 ### Debounce
 
