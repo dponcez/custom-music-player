@@ -1,19 +1,27 @@
-# Music Player 🎶
+# 🎶 Custom Music Player
 
-> **NOTE**: the audio files in (.mp3) format and image files in (.png) format used in this project are for entertainment purposes only, solely for creating the _Music Player_.
-> All rights reserved to the music correspond to each artist and/or the record label.
-
-## Technologies
-
-- [HTML](https://developer.mozilla.org/en-US/docs/Web/HTML)
-- [CSS](https://developer.mozilla.org/en-US/docs/Web/CSS)
-- [JavaScript](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
+> **NOTE**: this project is a custom music application and has no relationship with aby record label or music company. The purpose of this project is for entertainment only.
+> The copyrights of the songs and images used in this project belong to their respective owners.
 
 ## Development Environment
+----
+
+__Technologies__
+
+- [HTML5](https://developer.mozilla.org/en-US/docs/Web/HTML)
+- [CSS3](https://developer.mozilla.org/en-US/docs/Web/CSS)
+- [JavaScript](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
+
+__Souce code editor__
 
 - [VSCode](https://code.visualstudio.com)
 
+__Tool__
+
+- [GIT](https://git-scm.com)
+
 ### Project Structure
+----
 
 ```
 └── 📁custom-music-player
@@ -43,6 +51,7 @@
 ```
 
 ### ¿What is JSDoc?
+----
 
 [JSDoc](https://jsdoc.app) is a JavaScript documentation that uses tags to describe additional information about parameters and their return value, also a powerful tool for documenting JavaScript code.
 
@@ -59,10 +68,10 @@ Some of the advantages of using JSDoc tags are:
 
 Some of the most common JSDoc tags are: 
 
-- __@function__ is a tag used to refers to a function.
-- __@description__ is a tag used to indicates a detailed infomation about a function.
-- __@param__ is a tag used in function and method documentation to be describe the parameters that are passed to functions.
-- __@returns__ is a tag used to describe the return value of a function.
+- @function
+- @description
+- @param
+- @returns 
 
 __Basic syntaxis:__
 
@@ -80,11 +89,12 @@ __Basic syntaxis:__
 
 __Explanation__
 
-- @function: refers to a function and usually used in conjunction with the function name.
-- @description: indicates detailed information about the functions, variables, classes or methods that are documented.
-- @param: indicates that a parameter is being described.
-- { type }: specifies the data type of parameter, for example (string, number, object) etc.
-- nameOfParam: is the name of parameter.
+- __@function__: refers to a function and usually used in conjunction with the function name.
+- __@description__: indicates detailed information about the functions, variables, classes or methods that are documented.
+- __@param__: is a tag used in function and method documentation to be describe the parameters that are passed to functions.
+- __{ type }__: specifies the data type of parameter, for example (string, number, object) etc.
+- __@returns__ is a tag used to describe the return value of a function.
+- __nameOfParam__: is the name of parameter.
 
 __Example__
 
@@ -108,6 +118,7 @@ The following functions described below use JSDoc tags to discribe the purpose o
 The JSDoc is not available in the examples below, but you can see them in the repository.
 
 ### Debounce
+----
 
 The ```debounce()``` function forces a function to wait a few times before running the execution and preventing from being called several times.
 
@@ -133,7 +144,8 @@ The ```debounce()``` function forces a function to wait a few times before runni
   }
 ```
 
-### Format time
+### Format Time
+----
 
 The ```formatTime``` function allows you to get the time from current format.
 
@@ -151,11 +163,49 @@ const formatTime = (time) => {
 
 More information about this function and how to use it, go to [formatTime function](https://github.com/lkopacz/egghead-react-a11y-audio-player) and follow the steps: 
 
-1. Swtich to branch section
-2. Choose the branch 09-mute-states
-3. Select code section
-4. Go to folder (__src__)
-5. Next, go to foler (__Components__)
-6. Choose the file (__audio-player.js__)
+1. Swtich to branch <i class="fa-solid fa-code-branch"></i> section
+2. Choose the 09-mute-states branch <i class="fa-solid fa-code-branch"></i>
+3. Choose the code <i class="fa-solid fa-code"></i> section
+4. Go to folder <i class="fa-regular fa-folder"></i> (__src__)
+5. Next, go to foler <i class="fa-regular fa-folder"></i> (__Components__)
+6. Choose the file <i class="fa-regular fa-file"></i> (__audio-player.js__)
 
-Owner: [Lindsey Kopacz](https://github.com/lkopacz)
+Owner: [Lindsey Kopacz](https://github.com/lkopacz).
+
+### Switch to Custom Music Player
+----
+
+__Usage__
+
+To use this music player, you must open your development environment, in this case VSCode and access the index.html file, once in the file, press the "Show preview" button, which is located at the top right of the index.html, this will make the project open in a new window, to the right side of your index.html file, once there you can use the player.
+
+__Characteristics__
+
+It is a music player, with an attractive user interface, you can also change the theme from light to dark with the button on the top right.
+Additionally, the player contains the following functionalities:
+
+- Play the current song.
+- Go back or forward a song for "n" seconds.
+- Change music by pressing the forward and/or back buttons.
+- Choose a song at random.
+- Increase or decrease the volume.
+- See the duration time and/or elapsed time.
+
+__Requirements__
+
+- Have a development environment.
+- It is not necessary to have an internet connection to use the player, but the source type may be changed and icons, since external links are used.
+
+### License
+-----
+
+This project is distributed under the __MIT__ license. See the [LICENSE](./LICENSE) for more information
+
+<p>&copy; 2024, Damian Ponce</p>
+
+### Translation
+----
+
+Spanish version:
+
+- [es-Español](./es-ES/README-ES.md)
