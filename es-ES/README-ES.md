@@ -196,6 +196,39 @@ __Requisitos__
 - Disponer de un entorno de desarrollo.
 - No es necesario tener conexión a internet para utilizar el reproductor, pero es posible que se cambie el tipo de fuente e iconos, ya que se utilizan enlaces externos.
 
+### Diseño (UI/UX)
+----
+
+__¿Qué es el diseño UI/UX?__
+
+- UI (Interaz de Usuario): se refiere a la apariencia visual de una aplicación o sitio web, incluyendo elementos como botones, menús, colores y fuentes.
+
+- UX (Experiencia de Usuario): se centra en la experiencia de usuario al interactuar con una aplicación, desde la facilidad de uso hasta la satisfación general.
+<small style="font-size: .65rem">[GEMINI]</small>
+
+__Apariencia visual__
+
+- __Mode oscuro__
+
+<img src="../assets/images/dark-ui-pause.png"/>
+
+- __Modo claro__
+
+<img src="../assets/images/light-ui-pause.png"/>
+
+### Funcionamiento del Reproductor de Música
+----
+
+__Capturas de pantalla__
+
+- __Pausa__
+
+<img src="../assets/images/dark-ui-pause.png"/>
+
+- __Reproducir__
+
+<img src="../assets/images/dark-ui-play.png"/>
+
 ### Licencia
 ----
 
