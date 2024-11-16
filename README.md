@@ -1,6 +1,6 @@
 # 🎶 Custom Music Player
 
-> **NOTE**: this project is a custom music application and has no relationship with aby record label or music company. The purpose of this project is for entertainment only.
+> **NOTE**: this project is a custom music application and has no relationship with any record label or music company. The purpose of this project is for entertainment only.
 > The copyrights of the songs and images used in this project belong to their respective owners.
 
 ## Development Environment
@@ -194,7 +194,40 @@ Additionally, the player contains the following functionalities:
 __Requirements__
 
 - Have a development environment.
-- It is not necessary to have an internet connection to use the player, but the source type may be changed and icons, since external links are used.
+- It is not necessary to have an internet connection to use the player, but the source type and icons may be changed, since external links are used.
+
+### (UI/UX) Design
+----
+
+__¿What is UI/UX design?__
+
+- UI (User Interface): refers to the visual appearance of an application or website, including elements such as buttons, menus, colors and fonts.
+
+- UX (User Experience): focuses on the user's experience when interacting with an application, from ease of use to overall satisfaction.
+<small style="font-size: .65rem">[GEMINI]</small>
+
+__Visual Appearance__
+
+- __Dark mode__
+
+<img src="./assets/images/dark-ui-pause.png"/>
+
+- __Light mode__
+
+<img src="./assets/images/light-ui-pause.png"/>
+
+### Music Player Operation
+----
+
+__Screeshots__
+
+- __Pause__
+
+<img src="./assets/images/dark-ui-pause.png"/>
+
+- __Play__
+
+<img src="./assets/images/dark-ui-play.png"/>
 
 ### License
 -----
