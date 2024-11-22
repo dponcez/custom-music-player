@@ -70,10 +70,12 @@ export const player = () => {
   let index = 0;
   let timeout = 300;
   let playlist;
-  let isPlaying = false;
-  let isShuffle = false;
+  let playing = false;
+  let randomMode = false;
   let mousedown = false;
   let isMute = false;
+  let repeatOne = false;
+  let repeatMode = "repeat-all";
 
   const fetchData = async () => {
     const requestURL = '../json/index.json';
@@ -123,11 +125,11 @@ export const player = () => {
   };
 
   const handlePlaySong = () => {
-    if(!isPlaying) {
-      isPlaying = true;
+    if(!playing) {
+      playing = true;
       playSong()
     }else {
-      isPlaying = false;
+      playing = false;
       pauseSong()
     }
   }
@@ -135,8 +137,8 @@ export const player = () => {
   const handlePrevSong = () => {
     index--;
 
-    if(!isShuffle) {
-      isShuffle = true;
+    if(randomMode) {
+      randomMode = false;
 
       if(index < 0) playlist.length - 1;
       audio.currentTime = 0;
@@ -145,7 +147,7 @@ export const player = () => {
       loadCurrentSong(playlist[index]);
       playSong()
     }else {
-      isShuffle = false;
+      randomMode = true;
       chooseRandomMusic()
     }
 
@@ -154,8 +156,8 @@ export const player = () => {
   const handleNextSong = () => {
     index++;
 
-    if(!isShuffle) {
-      isShuffle = true;
+    if(randomMode) {
+      randomMode = false;
 
       if(index > playlist.length - 1) index = 0;
       audio.currentTime = 0;
@@ -164,7 +166,7 @@ export const player = () => {
       loadCurrentSong(playlist[index]);
       playSong()
     }else {
-      isShuffle = false;
+      randomMode = true;
       chooseRandomMusic()
     }
 
@@ -181,6 +183,36 @@ export const player = () => {
       isMute = false;
       volumeBtn.innerHTML = low;
       slider.value = 0;
+    }
+  }
+
+  const handleRandomMusic = () => {
+    repeatOne = !repeatOne;
+
+    switch(repeatMode){
+      case "repeat-all":
+        repeatMode = "shuffle";
+        randomMode = true;
+        repeatBtn.innerHTML = shuffle;
+
+        audio.loop = true;
+        chooseRandomMusic();
+        break;
+      case "shuffle":
+        repeatMode = "one";
+        randomMode = false;
+        repeatBtn.textContent = "one";
+
+        audio.loop = true;
+        loadSingleSong(playlist, repeatOne);
+        break;
+      default:
+        repeatMode = "repeat-all";
+        randomMode = false;
+        repeatBtn.innerHTML = repeatAll;
+
+        audio.loop = false;
+        playSong()
     }
   }
 
@@ -234,15 +266,11 @@ export const player = () => {
     playSong();
   };
 
-  const selectRandomMusic = () => {
-    if(!isShuffle) {
-      isShuffle = true;
-      repeatBtn.innerHTML = repeatAll
-      playSong()
-    }else {
-      isShuffle = false;
-      repeatBtn.innerHTML = shuffle;
-      chooseRandomMusic();
+  const loadSingleSong = (source, repeatOne) => {
+    if(repeatOne){
+      audio.src = source[index].src;
+      audio.loop = true;
+      audio.play()
     }
   }
   
@@ -250,7 +278,7 @@ export const player = () => {
   eventHandler(playBtn, 'click', debounce(() => handlePlaySong()), timeout);
   eventHandler(forwardBtn, 'click', debounce(() => handleNextSong()), timeout);
   eventHandler(backwardBtn, 'click', debounce(() => handlePrevSong()), timeout);
-  eventHandler(repeatBtn, 'click', debounce(() => selectRandomMusic()), timeout);
+  eventHandler(repeatBtn, 'click', debounce(() => handleRandomMusic()), timeout);
   eventHandler(volumeBtn, 'click', debounce(() => handleMuteSong()), timeout);
 
   eventHandler(progressBar, 'click', updateProgressBar);
