@@ -28,13 +28,13 @@
 
 :where(html, body, p, span) { margin: 0; }
 :where(button, input) { cursor: pointer; }
-:where(.flex) {
+:where(.flex, .spinner--container) {
   display: flex;
   align-items: center;
   justify-content: center
 }
-:where(.music--player, .turntable, .control--container) { position: relative; }
-:where(.feature--section, .progress--bar, .icon) { position: absolute; }
+:where(.music--player, .turntable, .control--container, .toggle, .inner--plate, .inner--base) { position: relative; }
+:where(.feature--section, .progress--bar, .icon, .spinner--container, .outer--plate, .outer--base, .tone--arm, .tonearm--container) { position: absolute; }
 
 p { 
   color: var(--black-color);
@@ -92,7 +92,6 @@ button {
         width: var(--sz);
         min-width: 3.35rem;
         height: calc(var(--pd) * 1.125);
-        position: relative;
         background: var(--dark-red-color);
         box-shadow: .125vmin .125vmin .125rem rgba(0, 0, 0, .5) inset, .125vmin -.125vmin .25rem rgba(102, 12, 5, 0.5) inset;
         border-radius: 15rem;
@@ -120,6 +119,23 @@ button {
       }
     }
   }
+  .spinner--container {
+    width: var(--sz);
+    height: var(--sz);
+    top: 0;
+    left: 0;
+    backdrop-filter: blur(.25rem);
+    background: rgba(0, 0, 0, .375);
+    z-index: 5;
+    .spinner {
+      width: calc(var(--pd) * 3);
+      height: calc(var(--pd) * 3);
+      border: var(--rd) solid rgba(0, 0, 0, .1275);
+      border-radius: var(--sz);
+      border-top-color: var(--white-color);
+      animation: spinner 1s cubic-bezier(0.615, 0.210, 0.755, 1) infinite;
+    }
+  }
 }
 
 .music--player {
@@ -138,7 +154,6 @@ button {
       --outer: 23rem;
       width: var(--outer);
       height: var(--outer);
-      position: absolute;
       background: var(--dark-gray-color);
       bottom: -18%;
       left: -10%;
@@ -150,7 +165,6 @@ button {
         --inner: 22rem;
         width: var(--inner);
         height: var(--inner);
-        position: relative;
         overflow: hidden;
         background: var(--disk-gradient-color) center / cover, no-repeat;
         box-shadow: -.35vmin -.125vmin .35rem 0 rgba(0, 0, 0, .275) inset, -.235vmin -.25vmin .5rem rgba(0, 0, 0, .375);
@@ -170,7 +184,6 @@ button {
       width: var(--base);
       height: var(--base);
       background: var(--base-light-mode);
-      position: absolute;
       bottom: calc(var(--base) * .5);
       right: calc(var(--base) * .7);
       border-radius: calc(var(--rd) * .5);
@@ -183,7 +196,6 @@ button {
         background: var(--inner-base-color);
         border-radius: var(--sz);
         box-shadow: -.15vmin -.05vmin .125rem rgba(0, 0, 0, .35) inset;
-        position: relative;
         isolation: isolete;
         &::before {
           content: "";
@@ -198,7 +210,6 @@ button {
           z-index: 2;
         }
         .tonearm--container {
-          position: absolute;
           width: var(--base);
           height: var(--base);
           transform: rotate(45deg);
@@ -207,7 +218,6 @@ button {
           .tone--arm {
             width: calc(var(--fnt-sz) * 12.75);
             height: calc(var(--rd) * 4);
-            position: absolute;
             top: 50%;
             left: 0%;
             transform: translate(-90%, -40%);
@@ -261,9 +271,7 @@ button {
         margin-block-end: calc(var(--rd) * .235); 
         font: 800 calc(var(--fnt-sz) * .85) var(--fnt-play); 
       }
-      .artist--name {
-        font: 300 calc(var(--fnt-sz) * .65) var(--fnt-abel)
-      }
+      .artist--name { font: 300 calc(var(--fnt-sz) * .65) var(--fnt-abel) }
       &.visible { bottom: -5rem }
     }
   }
@@ -285,8 +293,7 @@ button {
     width: var(--sz);
     height: 0.25rem;
     background: var(--white-color);
-    top: 0;
-    left: 0;
+    inset: 0;
     border-radius: calc(var(--rd) * 5);
     .progress {
       width: 0;
@@ -303,9 +310,7 @@ button {
     .player--container {
       justify-content: space-around;
       width: calc(var(--sz) * .25);
-      .play--btn {
-        font-size: calc(var(--fnt-sz) * 1.5)
-      }
+      .play--btn { font-size: calc(var(--fnt-sz) * 1.5) }
       & :is(.chevron--right, .chevron--left) { font-size: var(--pd) }
     }
     & :is(.forward--btn, .rewind--btn) { font-size: calc(var(--pd) * .6); }
@@ -324,5 +329,10 @@ button {
 
 @keyframes rotate {
   from { transform: rotate(0deg) }
+  to { transform: rotate(360deg) }
+}
+
+@keyframes spinner {
+  from { transform: rotate(0deg)}
   to { transform: rotate(360deg) }
 }
