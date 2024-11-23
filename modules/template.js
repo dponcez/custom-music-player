@@ -2,6 +2,9 @@ export const template = () => {
   const main = document.querySelector('.main');
   
   main.innerHTML = `
+    <div class="spinner--container" data-spinner>
+      <div class="spinner"></div>
+    </div>
     <header class="header flex">
         <h2 class="logo">music<span>player</span></h2>
         <div class="toggle--container flex">
