@@ -25,7 +25,8 @@ export const player = () => {
     repeatBtn: selector('[data-repeat]'),
     volumeBtn: selector('[data-volume]'),
     slider: selector('[data-slider]'),
-    audio: selector('[data-audio]')
+    audio: selector('[data-audio]'),
+    spinnerContainer: selector('[data-spinner')
   }
 
   const {
@@ -46,7 +47,8 @@ export const player = () => {
     repeatBtn,
     volumeBtn,
     slider,
-    audio
+    audio,
+    spinnerContainer
   } = htmlRefs;
 
   const icons = {
@@ -74,7 +76,7 @@ export const player = () => {
   let randomMode = false;
   let mousedown = false;
   let isMute = false;
-  let repeatOne = false;
+  let repeatOnce = false;
   let repeatMode = "repeat-all";
 
   const fetchData = async () => {
@@ -148,7 +150,7 @@ export const player = () => {
       playSong()
     }else {
       randomMode = true;
-      chooseRandomMusic()
+      chooseRandomSong()
     }
 
   }
@@ -167,9 +169,8 @@ export const player = () => {
       playSong()
     }else {
       randomMode = true;
-      chooseRandomMusic()
+      chooseRandomSong()
     }
-
   }
 
   const handleMuteSong = () => {
@@ -186,8 +187,8 @@ export const player = () => {
     }
   }
 
-  const handleRandomMusic = () => {
-    repeatOne = !repeatOne;
+  const handleRandomSong = () => {
+    repeatOnce = !repeatOnce;
 
     switch(repeatMode){
       case "repeat-all":
@@ -196,7 +197,7 @@ export const player = () => {
         repeatBtn.innerHTML = shuffle;
 
         audio.loop = true;
-        chooseRandomMusic();
+        chooseRandomSong();
         break;
       case "shuffle":
         repeatMode = "one";
@@ -204,7 +205,7 @@ export const player = () => {
         repeatBtn.textContent = "one";
 
         audio.loop = true;
-        loadSingleSong(playlist, repeatOne);
+        loadSingleSong(playlist, repeatOnce);
         break;
       default:
         repeatMode = "repeat-all";
@@ -216,13 +217,12 @@ export const player = () => {
     }
   }
 
-  const handleVolumeSlider = () => {
+  const volumeSlider = () => {
     audio.volume = slider.value / 100;
 
     (slider.value === '0') ? 
       volumeBtn.innerHTML = low :
       volumeBtn.innerHTML = high;
-    
   };
 
   const seekTimeUpdate = (e) => {
@@ -255,7 +255,7 @@ export const player = () => {
     })
   });
 
-  const chooseRandomMusic = () => {
+  const chooseRandomSong = () => {
     const getRandomIndex = Math.floor(Math.random() * playlist.length);
     const randomMusic = playlist[getRandomIndex];
 
@@ -266,28 +266,36 @@ export const player = () => {
     playSong();
   };
 
-  const loadSingleSong = (source, repeatOne) => {
-    if(repeatOne){
+  const loadSingleSong = (source, repeatOnce) => {
+    if(repeatOnce){
       audio.src = source[index].src;
       audio.loop = true;
       audio.play()
     }
   }
+
+  // allows the browser to load multimedia
+  // elements without pausing to load more data
+  const loadMultimediaElement = () => {
+    spinnerContainer.style.display = 'none';
+    audio.play()
+  };
   
   // events
   eventHandler(playBtn, 'click', debounce(() => handlePlaySong()), timeout);
   eventHandler(forwardBtn, 'click', debounce(() => handleNextSong()), timeout);
   eventHandler(backwardBtn, 'click', debounce(() => handlePrevSong()), timeout);
-  eventHandler(repeatBtn, 'click', debounce(() => handleRandomMusic()), timeout);
+  eventHandler(repeatBtn, 'click', debounce(() => handleRandomSong()), timeout);
   eventHandler(volumeBtn, 'click', debounce(() => handleMuteSong()), timeout);
 
   eventHandler(progressBar, 'click', updateProgressBar);
   eventHandler(progressBar, 'mousemove', debounce((e) => mousedown && updateProgressBar(e)), timeout);
   eventHandler(progressBar, 'mousedown', debounce(() => mousedown = true), timeout);
   eventHandler(progressBar, 'mouseup', debounce(() => mousedown = false), timeout);
-  eventHandler(slider, 'change', debounce(() => handleVolumeSlider()), timeout);
+  eventHandler(slider, 'change', debounce(() => volumeSlider()), timeout);
 
   eventHandler(audio, 'timeupdate', seekTimeUpdate);
   eventHandler(audio, 'loadedmetadata', seekTimeUpdate);
-  eventHandler(audio, 'ended', debounce(() => handleNextSong()))
+  eventHandler(audio, 'ended', debounce(() => handleNextSong()));
+  eventHandler(audio, 'canplaythrough', debounce(() => loadMultimediaElement()));
 }
