@@ -79,6 +79,17 @@ export const player = () => {
   let repeatOnce = false;
   let repeatMode = "repeat-all";
 
+  const path = '../assets/icon/repeat-1.svg';
+  const SVG_URL = 'http://www.w3.org/2000/svg';
+  const XLINK_URL = 'http://www.w3.org/1999/xlink';
+  const size = {
+    url: path,
+    width: 16,
+    height: 16,
+    x: 0,
+    y: 0
+  }
+
   const fetchData = async () => {
     const requestURL = '../json/index.json';
     try {
@@ -139,7 +150,7 @@ export const player = () => {
   const handlePrevSong = () => {
     index--;
 
-    if(randomMode) {
+    if(!randomMode) {
       randomMode = false;
 
       if(index < 0) playlist.length - 1;
@@ -158,7 +169,7 @@ export const player = () => {
   const handleNextSong = () => {
     index++;
 
-    if(randomMode) {
+    if(!randomMode) {
       randomMode = false;
 
       if(index > playlist.length - 1) index = 0;
@@ -202,7 +213,7 @@ export const player = () => {
       case "shuffle":
         repeatMode = "one";
         randomMode = false;
-        repeatBtn.textContent = "one";
+        repeatBtn.innerHTML = loadSVGElement(size);
 
         audio.loop = true;
         loadSingleSong(playlist, repeatOnce);
@@ -281,6 +292,25 @@ export const player = () => {
     audio.play()
   };
   
+  const createSVGElement = (url, element) => document.createElementNS(url, element);
+
+  const loadSVGElement = (size = {url, width, height, x, y}) => {
+    const svg = createSVGElement(SVG_URL, 'svg');
+    svg.setAttribute('width', size.width);
+    svg.setAttribute('height', size.height);
+
+    const image = createSVGElement(SVG_URL, 'image');
+    image.setAttributeNS(XLINK_URL, 'xlink:href', size.url);
+    image.setAttribute('x', size.x);
+    image.setAttribute('y', size.y);
+    image.setAttribute('width', size.width);
+    image.setAttribute('height', size.width);
+    image.setAttribute('preserveAspectRation', 'xMidYMid meet')
+
+    svg.appendChild(image);
+    return svg.outerHTML
+  }
+
   // events
   eventHandler(playBtn, 'click', debounce(() => handlePlaySong()), timeout);
   eventHandler(forwardBtn, 'click', debounce(() => handleNextSong()), timeout);
