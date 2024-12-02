@@ -428,13 +428,49 @@ __Explicación:__
 
 __handlePlaySong__
 
-Esta función es la encargada de cambiar el estado del botón de reproducción, de _play_ a _pause_
+Esta función es la encargada de cambiar el estado del botón de reproducción, de _play_ a _pause_, cuando el usuario ha hecho clic en el botón de reproducción, actuando como un conmutador.
+
+Cada vez que se llama a la función _handlePlaySong_, verifica el estado actual de la reproducción (playing) y realiza la acción opuesta.
 
 __Funcionamiento:__
 
-1. 
+1. __Si la música no está en reproducción:__ inicia la reproducción y cambia el estado de la variable _playing_ a __verdadero__.
+
+2. __Si la música está en reproducción:__ pausa la música y cambia el estado de la variable _playing_ a __falso__.
+
+__Consideraciones adicionales:__
+
+1. __Variable ```playing```:__ esta variable actua como un indicador del estado actual de la reproducción. Su valor cambia cada vez que se llama a la función ```handlePlaySong```.
+
+2. __Funciones ```playSong()``` y ```pauseSong()```:__ estas funciones contienen la lógica para iniciar y pausar la reproducción de la música.
+
+```js
+const handlePlaySong = () => {
+    if(!playing) {
+      playing = true;
+      playSong()
+    }else {
+      playing = false;
+      pauseSong()
+    }
+  }
+```
 
 __Explicaión:__
+
+1. - ```handlePlaySong```: esta función funciona como un conmutador, para permitir al usuario cambiar el estado del botón de reproducción. Es creada utilizando una función flecha ```() => {}``` que está asignada a una constante ```const``` para definir el cuerpo que contiene  la lógica.
+
+2. - ```if(!playing){}```: se utiliza un condición _if_, pra determindar si la variable _playing_ es falsa, lo que permitirá que se ejecute el código dentro de las llaves ```{}```.
+
+3. - ```playing = true```: se establece la variable _playing_ a verdadero, indicando que ahora está activa y se puede iniciar la reproducción de la música.
+
+4. - ```playSong()```: función encargada de iniciar la reproducción.
+
+5. - ```else{}```: si la condición _if_ no se cumple, el código que está en este bloque, se ejecuta.
+
+6. - ```playing = false```: se establece la variable _playing_ a falso, indicando que dicha variable está inactiva y deteniendo la reproducción.
+
+7. - ```pauseSong()```: función encargada de pausar la música.
 
 ### Licencia
 ----
