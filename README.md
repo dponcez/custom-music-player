@@ -229,6 +229,249 @@ __Screeshots__
 
 <img src="./assets/images/dark-ui-play.png"/>
 
+###Code Fragment Analysis
+----
+
+__fetchData__
+
+Within the _fetchData_ function, all the logic that will be used to extract the data from the playlist, which is stored in the _JSON_ file, is stored and thus, load the first song in said list.
+
+__Operation:__
+
+1. __Get data:__ the _fetch_ function is used to request the JSON file that contains the song information.
+
+2. __Parse data:__ converts the JSON response into a JavaScript object, which is stored in the _playlist_ variable.
+
+3. __Loading songs:__ the _loadCurrentSong_ function is responsible for loading or obtaining the first song in the playlist.
+
+```js
+const fetchData = async () => {
+    const requestURL = '../json/index.json';
+    try {
+      const response = await fetch(requestURL);
+      const json = await response.json();
+      playlist = json
+      loadCurrentSong(playlist[index])
+    } catch(error) {
+      log(`Failure to load data: ${error}`)
+    }
+  }
+
+  fetchData();
+```
+
+__Explanation:__
+
+1. __Declaration of the ```fetchData``` function:__
+
+    - ```async```: Indicates that the function is asynchronous, meaning that it can perform operations that take time without blocking the execution of the rest of the code (such as waiting for a file to be completely loaded).
+
+    - the variable ```const requestURL = "../json/index.json"```, defines the _URL_ or _Path_ of the _JSON_ file, which contains the playlist information.
+
+2. __Block _try...catch_:__
+
+    - ```try```: attempts to execute the code inside the block.
+      - ```fetch(requestURL)```: makes an _HTTP_ request or request to obtain the information from the JSON file.
+
+      - ```response.json()```: allows you to convert the response (which is a RESPONSE object) to a JavaScript object.
+
+      - ```playlist```: the variable _json_ is assigned, which contains the response that is converted to a JavaScript object.
+
+      - ```loadCurrentSong(playlist[index])```: loads the first song in the playlist.
+    
+    - ```catch```: If an error occurs during the execution of the ```try``` block, this block will be executed.
+
+      - ```log(`Failure to load data: ${error}`)```: prints an error message to the console, indicating that there was a problem loading the data.
+
+3. __Call to the ```fetchData``` function:__
+    - _fetchData():_ invokes the function to start the process of obtaining and loading the data.
+
+__loadCurrentSong__
+
+In this JavaScript code fragment, a function called ```loadCurrentSong``` is defined, which is responsible for loading the information of a specific song from a music player, based on the data provided in an object.
+
+__Operation:__
+
+1. __Object destructuring:__ extracts the properties of the input object, for ease of use.
+
+2. __Interface update:__ modifies the _HTML_ elements to display the song information.
+
+3. __Audio load:__ establishes the source of the audio element and loads it.
+
+4. __Error Handling:__ a _try...catch_ block is used to catch errors that may occur during the data loading process.
+
+```js
+const loadCurrentSong = (current) => {
+    const { artist, song, title, poster } = current;
+
+    try {
+      cover.style.backgroundImage = `url(${poster})`;
+      artistName.innerText = `${artist}`;
+      songName.innerText = `${title}`;
+
+      audio.src = `${song}`;
+      audio.load();
+    } catch(error) {
+      log(`Failure to parse the data: ${error}`)
+    }
+  }
+```
+
+__Explanation:__
+
+1. ```const loadCurrentSong = (current) => {```:
+    - a constant function called _loaCurrentSong_ is defined, which takes ```current``` as a parameter, this parameter is expected to be an object that contains the information of a song, such as (artist, song, title, poster) .
+
+2. ```const { artist, song, title, poster } = current```:
+    - a destructuring of the _current_ object is performed to extract the properties and assign them to the variables. This makes it easier to access these values ​​within the function.
+
+3. ```try```: 
+    - a _try_ block is started to handle possible errors that may occur during code execution.
+
+4. ```cover.style.backgroundImage = url(`${poster}`)```:
+    - set the element's backgroundImage property to show the song cover.
+    The image _URL_ is constructed using the template literal and the _poster_ property of the _current_ object.
+
+5. ```artistName.innerText = `${artist}` ```:
+    - the name of the artist is set within the _artistName_ element, which is obtained from the _artist_ property of the _current_ object.
+
+6. ```songName.innerText = `${title}` ```:
+    - the song title is set within the _songName_ element, which is obtained from the _title_ property of the _current_ object.
+
+7. ```audio.src = `${song}` ```:
+    - the source of the audio element is set within the _audio_ element, with the URL of the song that is obtained from the _song_ property of the _current_ object.
+
+8. ```audio.load()```:
+    - loading of the audio file begins.
+
+9. ```catch(error)```:
+    - if any error occurs during execution within the _try_ block, the _catch_ block is executed.
+
+10. ```log(`Failure to load data: ${error}`)```:
+    - an error message is printed to the console, indicating that there was a problem processing the data.
+
+__playSong__
+
+When the user clicks or presses the _play_ button, the _playSong_ function is called, to allow the player to start playing the selected song.
+
+__Operation:__
+
+1. __HTML Elements:__ adds classes to various elements, to indicate that playback has started.
+
+2. __Play button icon change:__ the icon changes to "pause" (<i class="fa-solid fa-pause"></i>), to indicate that at any time, the user can press said button, to pause the current song.
+
+3. __Start the player:__ when you press the _play_ button, the _play()_ method that is associated with the audio element is activated and the song begins to play.
+
+```js
+const playSong = () => {
+    outerPlate.classList.add('play');
+    tonearm.classList.add('active');
+    featureContainer.classList.add('visible');
+
+    playBtn.innerHTML = pause;
+    audio.play()
+  }
+```
+
+__Explanation:__
+
+1. ```outerPlate```, ```tonearm```, ```featureContainer```: 
+    - are _HTML_ elements, which receive their respective classes to make the user interface change, depending on whether playback is activated.
+      - ```outerPlate```: when the play button is pressed, the circle or disc in which the artist's cover or cover is displayed rotates clockwise.
+      - ```tonearm```: is the arm found at the bottom right of the player, which rotates about 15 degrees, at the same time as the _outerPlate_ element, when the play button is pressed.
+      - ```featureContainer```: this element is displayed down when the play button is pressed.
+    
+2. ```playBtn.innerHTML = pause```: the _playBtn_ element is responsible for playing the current song and changes its icon to _pause_, to indicate to the user that the current song can be paused or stopped.
+    - ```pause```: it is an object that works as a variable, since it is stored in the _icons_ object, like this: ```const icons = {pause: '<i class="fa-solid fa- pause"></i>'}```.
+
+3. ```audio.play()```: code responsible for making an audio or a song start playing.
+    - ```audio```: _HTML_ element.
+    - ```play()```: method responsible for starting a playback.
+
+__pauseSong__
+
+When the user clicks or presses the _pause_ button, the _pauseSong_ function is called, to allow the player to stop playing the selected song.
+
+__Operation:__
+
+1. __HTML Elements:__ removes classes from various elements, to indicate that playback has been paused.
+
+2. __Play button icon change:__ the icon changes to "play" (<i class="fa-solid fa-play"></i>), to indicate that at any time, the user can press said button, to play the current song.
+
+3. __Stop the player:__ when you press the _pause_ button, the _pause()_ method that is associated with the audio element is activated and the playback of the song is paused.
+
+```js
+const pauseSong = () => {
+    outerPlate.classList.remove('play');
+    tonearm.classList.remove('active');
+    featureContainer.classList.remove('visible');
+
+    pauseBtn.innerHTML = play;
+    audio.play()
+  }
+```
+
+__Explanation:__
+
+1. ```outerPlate```, ```tonearm```, ```featureContainer```: 
+    - are _HTML_ elements, which receive their respective classes to make the user interface change, depending on whether the playback is paused or stopped.
+      - ```outerPlate```: when the play button is pressed and its state is paused, the circle or disc in which the artist's cover or cover is displayed will stop, to indicate that its playback has been detained.
+      - ```tonearm```: is the arm located at the bottom right of the player, which will return to its initial position when the pause button is pressed.
+      - ```featureContainer```: this element is displayed at the top when the pause button is pressed, indicating that the playback of a song has stopped.
+
+2. ```pauseBtn.innerHTML = play```: the _pauseBtn_ element is responsible for pausing the playback of the current song and changes its icon to _play_, to indicate to the user that the current song can start playing.
+    - ```play```: it is an object that works as a variable, since it is stored in the _icons_ object, like this: ```const icons = {play: '<i class="fa-solid fa- ´play"></i>'}```.
+
+3. ```audio.pause()```: code responsible for stopping the playback of an audio or a song.
+    - ```audio```: _HTML_ element.
+    - ```pause()```: method responsible for pausing a playback.
+
+__handlePlaySong__
+
+This function is responsible for changing the state of the play button, from _play_ to _pause_, when the user has clicked on the play button, acting as a switch.
+
+Every time the _handlePlaySong_ function is called, it checks the current playing state and performs the opposite action.
+
+__Operation:__
+
+1. __If the music is not playing:__ start playback and change the state of the _playing_ variable to __true__.
+
+2. __If music is playing:__ pause the music and change the state of the variable _playing_ to __false__.
+
+__Additional considerations:__
+
+1. __Variable ```playing```:__ this variable acts as an indicator of the current state of playback. Its value changes each time the ```handlePlaySong``` function is called.
+
+2. __```playSong()``` and ```pauseSong()``` functions:__ these functions contain the logic to start and pause music playback. 
+
+```js
+const handlePlaySong = () => {
+    if(!playing) {
+      playing = true;
+      playSong()
+    }else {
+      playing = false;
+      pauseSong()
+    }
+  }
+```
+
+__Explanation:__
+
+1. - ```handlePlaySong```: This function works as a switch, to allow the user to change the state of the play button. It is created using an arrow function ```() => {}``` that is assigned to a constant ```const``` to define the body containing the logic.
+
+2. - ```if(!playing){}```: an _if_ condition is used to determine if the _playing_ variable is false, which will allow the code to be executed within the braces ```{}` ``.
+
+3. - ```playing = true```: the _playing_ variable is set to true, indicating that it is now active and music playback can start.
+
+4. - ```playSong()```: function responsible for starting playback.
+
+5. - ```else{}```: if the _if_ condition is not met, the code that is in this block is executed.
+
+6. - ```playing = false```: the _playing_ variable is set to false, indicating that said variable is inactive and stopping playback.
+
+7. - ```pauseSong()```: function responsible for pausing music.
+
 ### License
 -----
 
