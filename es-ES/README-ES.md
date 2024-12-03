@@ -527,7 +527,7 @@ __Explicación:__
 
 4. __```randomMode = false```:__ si no se está en modo aleratorio, esta variable se matiene en falso.
 
-5 __```if(index < 0) index = playlist.length - 1```:__ si el índice se vuelve negativo, se establece el índice en el último elemento de la lista de reproducción.
+5. __```if(index < 0) index = playlist.length - 1```:__ si el índice se vuelve negativo, se establece el índice en el último elemento de la lista de reproducción.
 
 6. __```audio.currentTime = 0```:__ se reinicia la reproducción del audio a su posición inicial.
 
