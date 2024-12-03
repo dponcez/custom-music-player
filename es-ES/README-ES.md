@@ -472,6 +472,73 @@ __Explicaión:__
 
 7. - ```pauseSong()```: función encargada de pausar la música.
 
+__handlePrevSong__
+
+Esta función se encarga de regrasar a la canción anterior, cada vez que el usuario presiona el botón "atrás" (<i class="fa-solid fa-chevron-left"></i>), además de ser escencial en la reproducción secuencial o aleratoria de música.
+
+__Funcionamiento:__
+
+1. __Decrementa el índice de una canción:__ se decrementa el valor del índice en la lista de reproducción.
+
+2. __Manejo de lista:__ si la lista llega al principio, se vuelve al final de dicha lista.
+
+3. __Reiniciar la reproducción:__ se reinicia la posición de reproducción del audio y de la barra de progreso.
+
+4. __Cargar nueva canción:__ se carga la canción anterior en el reproductor.
+
+5. __Iniciar reproducción:__ se inicia la carga de la canción.
+
+6. __Manejo de modo aleatorio:__ si está en modo aleartorio, se selecciona una nueva canción en forma aleatoria en lugar de la anterior.
+
+__Consideraciones adicionales:__
+
+1. __Variables globales:__ las variables ```index```, ```playlist```, ```randomMode```, ```audio```, ```progress```, son accesibles dentro del ámbito de esta función.
+
+2. __Modo aleatorio:__ la variable ```randomMode``` es la encargada de controlar si la reproducción se realiza de forma aleatoria o secuencial.
+
+```js
+const handlePrevSong = () => {
+    index--;
+
+    if(!randomMode) {
+      randomMode = false;
+
+      if(index < 0) playlist.length - 1;
+      audio.currentTime = 0;
+      progress.style.width = 0;
+      
+      loadCurrentSong(playlist[index]);
+      playSong()
+    }else {
+      randomMode = true;
+      chooseRandomSong()
+    }
+
+  }
+```
+
+__Explicación:__
+
+1. __```handlePrevSong```:__ esta función se utiliza para manejar la acción de pasar a la canción anterior en la lista de reproducción.
+
+2. __```index--```:__ en este caso, la variable _index_ decrementa en 1 el valor, para rastrear la posición actual de la canción.
+
+3. __```if(!randomMode)```:__ si la variable _randomMode_ que está dentro de los paréntesis ```()``` en la declaración _if_ es falsa, se ejecuta el código dentro de las llaves ```{}```.
+
+4. __```randomMode = false```:__ si no se está en modo aleratorio, esta variable se matiene en falso.
+
+5 __```if(index < 0) index = playlist.length - 1```:__ si el índice se vuelve negativo, se establece el índice en el último elemento de la lista de reproducción.
+
+6. __```audio.currentTime = 0```:__ se reinicia la reproducción del audio a su posición inicial.
+
+7. __```loadCurrentSong(playlist[index])```:__ se llama a la función _loadCurrentSong_ para cargar la nueva canción (la anterior en la lista) del reproductor.
+
+8. __```else```:__ si la condición _if_ no se cumple, el código que está en este bloque, se ejecuta.
+
+9. __```randomMode = true```:__ se mantiene el modo aleatorio activo.
+
+10. __```chooseRandomSong()```:__ se llama a la función _chooseRandomSong_ para seleccionar una canción aleatoria de la lista de reproducción.
+
 ### Licencia
 ----
 
