@@ -90,19 +90,18 @@ export const player = () => {
     y: 0
   }
 
-  const fetchData = async () => {
-    const requestURL = '../json/index.json';
+  const fetchData = async (URL) => {
     try {
-      const response = await fetch(requestURL);
-      const json = await response.json();
-      playlist = json
+      const response = await fetch(URL);
+      playlist = await response.json();
       loadCurrentSong(playlist[index])
     } catch(error) {
-      log(`Failure to load data: ${error}`)
+      log(`Failure to load playlist: ${error}`)
     }
   }
 
-  fetchData();
+  const requestURL = '../json/index.json';
+  fetchData(requestURL);
   
   const loadCurrentSong = (current) => {
     const { artist, song, title, poster } = current;
@@ -138,10 +137,10 @@ export const player = () => {
   };
 
   const handlePlaySong = () => {
-    if(!playing) {
+    if(!playing){
       playing = true;
       playSong()
-    }else {
+    }else{
       playing = false;
       pauseSong()
     }
@@ -153,7 +152,7 @@ export const player = () => {
     if(!randomMode) {
       randomMode = false;
 
-      if(index < 0) playlist.length - 1;
+      if(index < 0) index = playlist.length - 1;
       audio.currentTime = 0;
       progress.style.width = 0;
       
@@ -286,7 +285,7 @@ export const player = () => {
   }
 
   // allows the browser to load multimedia
-  // elements without pausing to load more data
+  // elements without pausing to load more playlist
   const loadMultimediaElement = () => {
     spinnerContainer.style.display = 'none';
     audio.play()
@@ -304,7 +303,7 @@ export const player = () => {
     image.setAttribute('x', size.x);
     image.setAttribute('y', size.y);
     image.setAttribute('width', size.width);
-    image.setAttribute('height', size.width);
+    image.setAttribute('height', size.height);
     image.setAttribute('preserveAspectRation', 'xMidYMid meet')
 
     svg.appendChild(image);
