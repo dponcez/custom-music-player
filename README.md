@@ -577,7 +577,7 @@ const handleNextSong = () => {
     loadCurrentSong(playlist[index]);
     playSong()
   }else{
-    randomIndex = true;
+    randomMode = true;
     chooseRandomSong()
   }
 }
