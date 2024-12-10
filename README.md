@@ -503,7 +503,7 @@ const handlePrevSong = () => {
     if(!randomMode) {
       randomMode = false;
 
-      if(index < 0) playlist.length - 1;
+      if(index < 0) index = playlist.length - 1;
       audio.currentTime = 0;
       progress.style.width = 0;
       
@@ -532,6 +532,72 @@ __Explanation:__
 6. __```audio.currentTime = 0```:__ the audio playback is restarted at its initial position.
 
 7. __```loadCurrentSong(playlist[index])```:__ the _loadCurrentSong_ function is called to load the new song (the previous one in the list) from the player.
+
+8. __```else```:__ if the condition _if_ is not met, the code that is in this block is executed.
+
+9. __```randomMode = true```:__ the random mode is kept active.
+
+10. __```chooseRandomSong()```:__ the _chooseRandomSong_ function is called to select a random song from the playlist.
+
+__handleNextSong__
+
+Like the previous function, this function is responsible for the sequential or random management of music, with the difference that it advances to the next song, each time the user presses the "forward" button (<i class="fa-solid fa -chevron-right"></i>).
+
+__Operation:__
+
+1. __Increment the index of a song:__ the index value in the playlist is incremented.
+
+2. __List management:__ if the list reaches the end, it returns to the beginning of said list.
+
+3. __Restart playback:__ the audio playback position and progress bar are reset.
+
+4. __Load new song:__ the next song is loaded into the player.
+
+5. __Start playback:__ the song starts loading.
+
+6. __Random mode handling:__ If in random mode, a new song is selected randomly instead of the next one.
+
+__Additional considerations:__
+
+1. __Global variables:__ the variables ```index```, ```playlist```, ```randomMode```, ```audio```, ```progress```, are accessible within the scope of this function.
+
+2. __Random Mode:__ the ```randomMode``` variable is responsible for controlling whether playback is done randomly or sequentially.
+
+```js
+const handleNextSong = () => {
+  index++;
+
+  if(!randomMode){
+    randomMode = false;
+
+    if(index > playlist.length - 1) index = 0;
+    audio.currentTime = 0;
+    progress.style.width = 0;
+
+    loadCurrentSong(playlist[index]);
+    playSong()
+  }else{
+    randomIndex = true;
+    chooseRandomSong()
+  }
+}
+```
+
+__Explanation:__
+
+1. __```handleNextSong```:__ this function is used to handle the action of moving to the next song in the playlist.
+
+2. __```index--```:__ in this case, the _index_ variable increments the value by 1, to track the current position of the song.
+
+3. __```if(!randomMode)```:__ if the variable _randomMode_ inside the parentheses ```()``` in the _if_ statement is false, the code inside the braces ` is executed ``{}```.
+
+4. __```randomMode = false```:__ if not in random mode, this variable is set to false.
+
+5. __```if(index > playlist.length - 1) index = 0```:__ if index becomes positive, sets the index to the start of the playlist item.
+
+6. __```audio.currentTime = 0```:__ the audio playback is restarted at its initial position.
+
+7. __```loadCurrentSong(playlist[index])```:__ the _loadCurrentSong_ function is called to load the new song (the next one in the list) from the player.
 
 8. __```else```:__ if the condition _if_ is not met, the code that is in this block is executed.
 
