@@ -90,18 +90,18 @@ export const player = () => {
     y: 0
   }
 
-  const fetchData = async (URL) => {
+  const fetchData = async () => {
+    const requestURL = '../json/index.json';
     try {
-      const response = await fetch(URL);
+      const response = await fetch(requestURL);
       playlist = await response.json();
       loadCurrentSong(playlist[index])
     } catch(error) {
-      log(`Failure to load playlist: ${error}`)
+      log(`Failure to load data: ${error}`)
     }
   }
 
-  const requestURL = '../json/index.json';
-  fetchData(requestURL);
+  fetchData();
   
   const loadCurrentSong = (current) => {
     const { artist, song, title, poster } = current;
@@ -137,10 +137,10 @@ export const player = () => {
   };
 
   const handlePlaySong = () => {
-    if(!playing){
+    if(!playing) {
       playing = true;
       playSong()
-    }else{
+    }else {
       playing = false;
       pauseSong()
     }
@@ -285,7 +285,7 @@ export const player = () => {
   }
 
   // allows the browser to load multimedia
-  // elements without pausing to load more playlist
+  // elements without pausing to load more data
   const loadMultimediaElement = () => {
     spinnerContainer.style.display = 'none';
     audio.play()
