@@ -11,7 +11,7 @@
   --white-color: #f7f8f9;
   --gray-color: #9da0a5;
   --light-blue-color: #2e8ce2;
-  --dark-red-color: #a8332b;
+  --dark-red-color: #6F1A15;
   --dark-gray-color: #41474e;
   --dark-blue-color: #1f313c;
   --turntable-light-mode: linear-gradient(135deg, #274f77 0%, #2196f3 60%, #3787d7 100%);
@@ -298,7 +298,12 @@ button {
     .progress {
       width: 0;
       height: var(--sz);
-      background: var(--dark-red-color);
+      background: linear-gradient(
+        45deg,  
+        var(--dark-red-color) 35%,
+        #982120 65%,
+        #BD2B27 100%
+      );
       border-radius: inherit;
       transition: width 100ms cubic-bezier(0.075, 0.82, 0.165, 1)
     }
