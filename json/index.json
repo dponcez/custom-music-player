@@ -1,62 +1,64 @@
-[
-  {
-    "artist": "50 cent ft. nate dogg",
-    "song": "../assets/audio/21-questions.mp3",
-    "title": "21 questions",
-    "poster": "../assets/images/poster-1.png"
-  },
-  {
-    "artist": "2Pac",
-    "song": "../assets/audio/all-eyez-on-me.mp3",
-    "title": "all eyez on me",
-    "poster": "../assets/images/poster-2.png"
-  },
-  {
-    "artist": "kendric lamar ft. SZA",
-    "song": "../assets/audio/all-the-stars.mp3",
-    "title": "all the stars",
-    "poster": "../assets/images/poster-3.png"
-  },
-  {
-    "artist": "chris brown ft. young thug",
-    "song": "../assets/audio/go-crazy.mp3",
-    "title": "go crazy",
-    "poster": "../assets/images/poster-4.png"
-  },
-  {
-    "artist": "DMX",
-    "song": "../assets/audio/slippin.mp3",
-    "title": "slippin'",
-    "poster": "../assets/images/poster-5.png"
-  },
-  {
-    "artist": "joiner lucas",
-    "song": "../assets/audio/finally.mp3",
-    "title": "finally",
-    "poster": "../assets/images/poster-6.png"
-  },
-  {
-    "artist": "ella mai",
-    "song": "../assets/audio/shot-clock.mp3",
-    "title": "shot clock",
-    "poster": "../assets/images/poster-7.png"
-  },
-  {
-    "artist": "kehlani ft. zedd",
-    "song": "../assets/audio/good-things.mp3",
-    "title": "good things",
-    "poster": "../assets/images/poster-8.png"
-  },
-  {
-    "artist": "warren g ft. nate dogg",
-    "song": "../assets/audio/regulate.mp3",
-    "title": "regualte",
-    "poster": "../assets/images/poster-9.png"
-  },
-  {
-    "artist": "T.I ft. chris brown",
-    "song": "../assets/audio/private-show.mp3",
-    "title": "private show",
-    "poster": "../assets/images/poster-10.png"
-  }
-]
+{
+  "playlist": [
+    {
+      "artist": "50 cent ft. nate dogg",
+      "song": "../assets/audio/21-questions.mp3",
+      "title": "21 questions",
+      "poster": "../assets/images/poster-1.png"
+    },
+    {
+      "artist": "2Pac",
+      "song": "../assets/audio/all-eyez-on-me.mp3",
+      "title": "all eyez on me",
+      "poster": "../assets/images/poster-2.png"
+    },
+    {
+      "artist": "kendric lamar ft. SZA",
+      "song": "../assets/audio/all-the-stars.mp3",
+      "title": "all the stars",
+      "poster": "../assets/images/poster-3.png"
+    },
+    {
+      "artist": "chris brown ft. young thug",
+      "song": "../assets/audio/go-crazy.mp3",
+      "title": "go crazy",
+      "poster": "../assets/images/poster-4.png"
+    },
+    {
+      "artist": "DMX",
+      "song": "../assets/audio/slippin.mp3",
+      "title": "slippin'",
+      "poster": "../assets/images/poster-5.png"
+    },
+    {
+      "artist": "joiner lucas",
+      "song": "../assets/audio/finally.mp3",
+      "title": "finally",
+      "poster": "../assets/images/poster-6.png"
+    },
+    {
+      "artist": "ella mai",
+      "song": "../assets/audio/shot-clock.mp3",
+      "title": "shot clock",
+      "poster": "../assets/images/poster-7.png"
+    },
+    {
+      "artist": "kehlani ft. zedd",
+      "song": "../assets/audio/good-things.mp3",
+      "title": "good things",
+      "poster": "../assets/images/poster-8.png"
+    },
+    {
+      "artist": "warren g ft. nate dogg",
+      "song": "../assets/audio/regulate.mp3",
+      "title": "regualte",
+      "poster": "../assets/images/poster-9.png"
+    },
+    {
+      "artist": "T.I ft. chris brown",
+      "song": "../assets/audio/private-show.mp3",
+      "title": "private show",
+      "poster": "../assets/images/poster-10.png"
+    }
+  ]
+}
