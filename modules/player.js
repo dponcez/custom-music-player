@@ -90,21 +90,25 @@ export const player = () => {
     y: 0
   }
 
-  const fetchData = async () => {
-    const requestURL = '../json/index.json';
+  const fetchData = async (URL) => {
     try {
-      const response = await fetch(requestURL);
-      playlist = await response.json();
-      loadCurrentSong(playlist[index])
+      const response = await fetch(URL);
+      if(!response.ok) throw new Error('Failure to load data');
+
+      const data = await response.json();
+      playlist = data;
+      loadCurrentSong(playlist, index)
     } catch(error) {
-      log(`Failure to load data: ${error}`)
+      log(`${error.message}`)
     }
   }
-
-  fetchData();
   
-  const loadCurrentSong = (current) => {
-    const { artist, song, title, poster } = current;
+  const requestURL = '../json/index.json';
+  fetchData(requestURL);
+  
+  const loadCurrentSong = (data, index) => {
+    const source = data.playlist[index];
+    const { artist, song, title, poster } = source;
 
     try {
       cover.style.backgroundImage = `url(${poster})`;
@@ -149,37 +153,44 @@ export const player = () => {
   const handlePrevSong = () => {
     index--;
 
-    if(!randomMode) {
-      randomMode = false;
-
-      if(index < 0) index = playlist.length - 1;
-      audio.currentTime = 0;
-      progress.style.width = 0;
-      
-      loadCurrentSong(playlist[index]);
-      playSong()
-    }else {
-      randomMode = true;
-      chooseRandomSong()
+    try {
+      if(!randomMode) {
+        randomMode = false;
+  
+        if(index < 0) index = playlist.length - 1;
+        audio.currentTime = 0;
+        progress.style.width = 0;
+        
+        loadCurrentSong(playlist, index);
+        playSong();
+      }else {
+        randomMode = true;
+        chooseRandomSong()
+      }
+    } catch (error) {
+      log(`Error to play the previous song: ${error.message}`)
     }
-
   }
 
   const handleNextSong = () => {
     index++;
 
-    if(!randomMode) {
-      randomMode = false;
-
-      if(index > playlist.length - 1) index = 0;
-      audio.currentTime = 0;
-      progress.style.width = 0;
-
-      loadCurrentSong(playlist[index]);
-      playSong()
-    }else {
-      randomMode = true;
-      chooseRandomSong()
+    try {
+      if(!randomMode) {
+        randomMode = false;
+  
+        if(index > playlist.length - 1) index = 0;
+        audio.currentTime = 0;
+        progress.style.width = 0;
+  
+        loadCurrentSong(playlist, index);
+        playSong();
+      }else {
+        randomMode = true;
+        chooseRandomSong()
+      }
+    } catch (error) {
+      log(`Error to play the next song: ${error.message}`)
     }
   }
 
