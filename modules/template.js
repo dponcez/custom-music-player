@@ -27,7 +27,9 @@ export const template = () => {
           </div>
           <section class="feature--section flex" id="featureSection" aria-describedby="featureSection" role="contentinfo" data-feature>
             <p class="song--name" role="dialog" data-song-name>song name</p>
-            <p class="artist--name" role="dialog" data-artist-name>artist name</p>
+            <div class="flex">
+              <p class="artist--name" role="dialog" data-artist-name>artist name</p> <span class="dash"></span> <p class="album" role="dialog" data-album></p>
+            </div>
           </section>
         </div>
       </div>
