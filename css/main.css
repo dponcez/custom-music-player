@@ -271,7 +271,15 @@ button {
         margin-block-end: calc(var(--rd) * .235); 
         font: 800 calc(var(--fnt-sz) * .85) var(--fnt-play); 
       }
-      .artist--name { font: 300 calc(var(--fnt-sz) * .65) var(--fnt-abel) }
+      .artist--name,
+      .album { font: 300 calc(var(--fnt-sz) * .65) var(--fnt-abel) }
+      .dash {
+        margin-inline: calc(var(--rd) * .75);
+        width: var(--rd);
+        height: calc(var(--rd) * .5);
+        background: var(--gray-color);
+        border-radius: calc(var(--rd) * .35)
+      }
       &.visible { bottom: -5rem }
     }
   }
