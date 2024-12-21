@@ -4,61 +4,106 @@
       "artist": "50 cent ft. nate dogg",
       "song": "../assets/audio/21-questions.mp3",
       "title": "21 questions",
-      "poster": "../assets/images/poster-1.png"
+      "poster": "../assets/images/poster-1.png",
+      "album": "get rich or die tryin'"
     },
     {
       "artist": "2Pac",
       "song": "../assets/audio/all-eyez-on-me.mp3",
       "title": "all eyez on me",
-      "poster": "../assets/images/poster-2.png"
+      "poster": "../assets/images/poster-2.png",
+      "album": "all eyez on me"
     },
     {
       "artist": "kendric lamar ft. SZA",
       "song": "../assets/audio/all-the-stars.mp3",
       "title": "all the stars",
-      "poster": "../assets/images/poster-3.png"
+      "poster": "../assets/images/poster-3.png",
+      "album": "black panther soundtrack"
     },
     {
       "artist": "chris brown ft. young thug",
       "song": "../assets/audio/go-crazy.mp3",
       "title": "go crazy",
-      "poster": "../assets/images/poster-4.png"
+      "poster": "../assets/images/poster-4.png",
+      "album": "slime & b"
     },
     {
       "artist": "DMX",
       "song": "../assets/audio/slippin.mp3",
       "title": "slippin'",
-      "poster": "../assets/images/poster-5.png"
+      "poster": "../assets/images/poster-5.png",
+      "album": "flesh of my flesh, blood of my blood"
     },
     {
       "artist": "joiner lucas",
       "song": "../assets/audio/finally.mp3",
       "title": "finally",
-      "poster": "../assets/images/poster-6.png"
+      "poster": "../assets/images/poster-6.png",
+      "album": "ADHD"
     },
     {
       "artist": "ella mai",
       "song": "../assets/audio/shot-clock.mp3",
       "title": "shot clock",
-      "poster": "../assets/images/poster-7.png"
+      "poster": "../assets/images/poster-7.png",
+      "album": "ella mai"
     },
     {
       "artist": "kehlani ft. zedd",
       "song": "../assets/audio/good-things.mp3",
       "title": "good things",
-      "poster": "../assets/images/poster-8.png"
+      "poster": "../assets/images/poster-8.png",
+      "album": "single"
     },
     {
       "artist": "warren g ft. nate dogg",
       "song": "../assets/audio/regulate.mp3",
       "title": "regualte",
-      "poster": "../assets/images/poster-9.png"
+      "poster": "../assets/images/poster-9.png",
+      "album": "g funk era"
     },
     {
       "artist": "T.I ft. chris brown",
       "song": "../assets/audio/private-show.mp3",
       "title": "private show",
-      "poster": "../assets/images/poster-10.png"
+      "poster": "../assets/images/poster-10.png",
+      "album": "paperwork"
+    },
+    {
+      "artist": "bad meets evil",
+      "song": "../assets/audio/fast-lane.mp3",
+      "title": "fast lane",
+      "poster": "../assets/images/poster-11.png",
+      "album": "hell: the sequel"
+    },
+    {
+      "artist": "lewis capaldi",
+      "song": "../assets/audio/before-you-go.mp3",
+      "title": "before you go",
+      "poster": "../assets/images/poster-12.png",
+      "album": "divinely uninspired to a hellish extent"
+    },
+    {
+      "artist": "chris brown",
+      "song": "../assets/audio/should_ve-kissed-you.mp3",
+      "title": "should've kissed you",
+      "poster": "../assets/images/poster-13.png",
+      "album": "F.A.M.E"
+    },
+    {
+      "artist": "mery j blige",
+      "song": "../assets/audio/family-affair.mp3",
+      "title": "family affair",
+      "poster": "../assets/images/poster-14.png",
+      "album": "no more drama"
+    },
+    {
+      "artist": "g-unit",
+      "song": "../assets/audio/poppin-them-thangs.mp3",
+      "title": "poppin' them thangs",
+      "poster": "../assets/images/poster-15.png",
+      "album": "beg for mercy"
     }
   ]
 }
