@@ -98,7 +98,7 @@ export const player = () => {
       if(!response.ok) throw new Error('Network response was not ok');
 
       const data = await response.json();
-      if(Array.isArray(data)) throw new Error('playlist is not an array');
+      if(!Array.isArray(data.playlist)) throw new Error('Playlist is not an array');
 
       playlist = data;
       loadCurrentSong(playlist, current_index)
