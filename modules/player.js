@@ -162,7 +162,7 @@ export const player = () => {
       if(!randomMode) {
         randomMode = false;
   
-        if(current_index < 0) current_index = playlist.playlist.length;
+        if(current_index < 0) current_index = playlist.playlist.length - 1;
         audio.currentTime = 0;
         progress.style.width = 0;
         
@@ -184,7 +184,7 @@ export const player = () => {
       if(!randomMode) {
         randomMode = false;
   
-        if(current_index > playlist.playlist.length) current_index = 0;
+        if(current_index > playlist.playlist.length - 1) current_index = 0;
         audio.currentTime = 0;
         progress.style.width = 0;
   
