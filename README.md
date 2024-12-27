@@ -268,11 +268,13 @@ const fetchData = async () => {
 const fetchData = async (URL) => {
     try {
       const response = await fetch(URL);
-      if(!response.ok) throw new Error('Failure to load data');
+      if(!response.ok) throw new Error('Network response was not ok');
 
       const data = await response.json();
+      if(!Array.isArray(data.playlist)) throw new Error('Playlist is not an array');
+
       playlist = data;
-      loadCurrentSong(playlist, index)
+      loadCurrentSong(playlist, current_index)
     } catch(error) {
       log(`${error.message}`)
     }
@@ -295,13 +297,15 @@ __Explanation:__
     - ```try```: attempts to execute the code inside the block.
       - ```fetch(URL)```: makes an _HTTP_ request or request to obtain the information from the JSON file.
 
-      - - ```if(!response.ok) throw new Error('Failure to load data')```: if the request for the information of the data found in the file is not satisfactory, it will throw an error informing that something has gone wrong with the data loading.
+      - - ```if(!response.ok) throw new Error('Network response was not ok')```: if the request for the information of the data found in the file is not satisfactory, it will throw an error informing that something has gone wrong with the data loading.
 
       - ```response.json()```: allows you to convert the response (which is a RESPONSE object) to a JavaScript object.
 
+      - ```if(!Array.isArray(data.playlist)) throw new Error('Playlist is not an array')```: Check if _data.playlist_ is an array before assigning it to the variable _playlist_ , this prevents errors if the JSON structure changes.
+
       - ```playlist```: the variable _json_ is assigned, which contains the response that is converted to a JavaScript object.
 
-      - ```loadCurrentSong(playlist, index)```: loads the first song in the playlist.
+      - ```loadCurrentSong(playlist, current_index)```: loads the first song in the playlist.
     
     - ```catch```: If an error occurs during the execution of the ```try``` block, this block will be executed.
 
@@ -570,19 +574,21 @@ const handlePrevSong = () => {
 
 **Now:**
 
+> **NOTE!**: the global variable __```index```__ was modified to __```current_index```__, so that there is no confusion with the parameter received by the __```loadCurrentSong(data, index) function```__.
+
 ```js
 const handlePrevSong = () => {
-  index--;
+  current_index--;
 
   try {
     if(!randomMode) {
       randomMode = false;
 
-      if(index < 0) index = playlist.length - 1;
+      if(current_index < 0) current_index = playlist.playlist.length - 1;
       audio.currentTime = 0;
       progress.style.width = 0;
       
-      loadCurrentSong(playlist, index);
+      loadCurrentSong(playlist, current_index);
       playSong();
     }else {
       randomMode = true;
@@ -598,7 +604,7 @@ __Explanation:__
 
 1. __```handlePrevSong```:__ this function is used to handle the action of moving to the previous song in the playlist.
 
-2. __```index--```:__ in this case, the variable _index_ decrements the value by 1, to track the current position of the song.
+2. __```current_index--```:__ in this case, the variable _current_index_ decrements the value by 1, to track the current position of the song.
 
 3. __```try/catch```__: block to handle possible errors in the execution of the code, and throw an error through the console, if the code that is in the _try_ block is not executed.
 
@@ -606,11 +612,11 @@ __Explanation:__
 
 4. __```randomMode = false```:__ if not in random mode, this variable is set to false.
 
-5. __```if(index < 0) index = playlist.length - 1```:__ if the index becomes negative, sets the index to the last item in the playlist.
+5. __```if(current_index < 0) current_index = playlist.playlist.length - 1```:__ if the index becomes negative, sets the index to the last item in the playlist.
 
 6. __```audio.currentTime = 0```:__ the audio playback is restarted at its initial position.
 
-7. __```loadCurrentSong(playlist, index)```:__ the _loadCurrentSong_ function is called to load the new song (the previous one in the list) from the player.
+7. __```loadCurrentSong(playlist, current_index)```:__ the _loadCurrentSong_ function is called to load the new song (the previous one in the list) from the player.
 
 8. __```else```:__ if the condition _if_ is not met, the code that is in this block is executed.
 
@@ -666,19 +672,21 @@ const handleNextSong = () => {
 
 **Now:**
 
+> **NOTE!**: the global variable __```index```__ was modified to __```current_index```__, so that there is no confusion with the parameter received by the __```loadCurrentSong(data, index) function```__.
+
 ```js
 const handleNextSong = () => {
-  index++;
+  current_index++;
 
   try {
     if(!randomMode) {
       randomMode = false;
 
-      if(index > playlist.length - 1) index = 0;
+      if(current_index > playlist.playlist.length - 1) current_index = 0;
       audio.currentTime = 0;
       progress.style.width = 0;
 
-      loadCurrentSong(playlist, index);
+      loadCurrentSong(playlist, current_index);
       playSong();
     }else {
       randomMode = true;
@@ -694,7 +702,7 @@ __Explanation:__
 
 1. __```handleNextSong```:__ this function is used to handle the action of moving to the next song in the playlist.
 
-2. __```index--```:__ in this case, the _index_ variable increments the value by 1, to track the current position of the song.
+2. __```current_index++```:__ in this case, the _current_index_ variable increments the value by 1, to track the current position of the song.
 
 3. __```try/catch```__: block to handle possible errors in the execution of the code, and throw an error through the console, if the code that is in the _try_ block is not executed.
 
@@ -702,11 +710,11 @@ __Explanation:__
 
 4. __```randomMode = false```:__ if not in random mode, this variable is set to false.
 
-5. __```if(index > playlist.length - 1) index = 0```:__ if index becomes positive, sets the index to the start of the playlist item.
+5. __```if(current_index > playlist.playlist.length - 1) current_index = 0```:__ if index becomes positive, sets the index to the start of the playlist item.
 
 6. __```audio.currentTime = 0```:__ the audio playback is restarted at its initial position.
 
-7. __```loadCurrentSong(playlist, index)```:__ the _loadCurrentSong_ function is called to load the new song (the next one in the list) from the player.
+7. __```loadCurrentSong(playlist, current_index)```:__ the _loadCurrentSong_ function is called to load the new song (the next one in the list) from the player.
 
 8. __```else```:__ if the condition _if_ is not met, the code that is in this block is executed.
 
