@@ -14,6 +14,7 @@ export const player = () => {
     featureContainer: selector('[data-feature]'),
     artistName: selector('[data-artist-name]'),
     songName: selector('[data-song-name]'),
+    albumName: selector('[data-album]'),
     progressBar: selector('[data-progress-bar]'),
     progress: selector('[data-progress]'),
     currentTxt: selector('[data-current-time]'),
@@ -36,6 +37,7 @@ export const player = () => {
     featureContainer,
     artistName,
     songName,
+    albumName,
     progressBar,
     progress,
     currentTxt,
@@ -69,7 +71,7 @@ export const player = () => {
     high
   } = icons
 
-  let index = 0;
+  let current_index = 0;
   let timeout = 300;
   let playlist;
   let playing = false;
@@ -93,11 +95,13 @@ export const player = () => {
   const fetchData = async (URL) => {
     try {
       const response = await fetch(URL);
-      if(!response.ok) throw new Error('Failure to load data');
+      if(!response.ok) throw new Error('Network response was not ok');
 
       const data = await response.json();
+      if(Array.isArray(data)) throw new Error('playlist is not an array');
+
       playlist = data;
-      loadCurrentSong(playlist, index)
+      loadCurrentSong(playlist, current_index)
     } catch(error) {
       log(`${error.message}`)
     }
@@ -108,12 +112,13 @@ export const player = () => {
   
   const loadCurrentSong = (data, index) => {
     const source = data.playlist[index];
-    const { artist, song, title, poster } = source;
+    const { artist, song, title, poster, album } = source;
 
     try {
       cover.style.backgroundImage = `url(${poster})`;
       artistName.innerText = `${artist}`;
       songName.innerText = `${title}`;
+      albumName.innerText = `${album}`;
 
       audio.src = `${song}`;
       audio.load();
@@ -151,17 +156,17 @@ export const player = () => {
   }
 
   const handlePrevSong = () => {
-    index--;
+    current_index--;
 
     try {
       if(!randomMode) {
         randomMode = false;
   
-        if(index < 0) index = playlist.length - 1;
+        if(current_index < 0) current_index = playlist.playlist.length;
         audio.currentTime = 0;
         progress.style.width = 0;
         
-        loadCurrentSong(playlist, index);
+        loadCurrentSong(playlist, current_index);
         playSong();
       }else {
         randomMode = true;
@@ -173,17 +178,17 @@ export const player = () => {
   }
 
   const handleNextSong = () => {
-    index++;
+    current_index++;
 
     try {
       if(!randomMode) {
         randomMode = false;
   
-        if(index > playlist.length - 1) index = 0;
+        if(current_index > playlist.playlist.length) current_index = 0;
         audio.currentTime = 0;
         progress.style.width = 0;
   
-        loadCurrentSong(playlist, index);
+        loadCurrentSong(playlist, current_index);
         playSong();
       }else {
         randomMode = true;
@@ -217,7 +222,7 @@ export const player = () => {
         randomMode = true;
         repeatBtn.innerHTML = shuffle;
 
-        audio.loop = true;
+        audio.loop = false;
         chooseRandomSong();
         break;
       case "shuffle":
@@ -277,19 +282,30 @@ export const player = () => {
   });
 
   const chooseRandomSong = () => {
-    const getRandomIndex = Math.floor(Math.random() * playlist.length);
-    const randomMusic = playlist[getRandomIndex];
+    current_index = Math.floor(Math.random() * playlist.playlist.length);
+    const getRandomIndex = Math.floor(Math.random() * playlist.playlist.length);
+    const randomMusic = playlist.playlist[getRandomIndex];
 
-    audio.currentTime = 0;
-    progress.style.width = 0;
+    try {
+      if(playlist !== "undefined"){
+        randomMode = true;
+        fetchData(requestURL);
+        throw new Error('Playlist is not defined')
+      }
 
-    loadCurrentSong(randomMusic);
-    playSong();
+      audio.currentTime = 0;
+      progress.style.width = 0;
+  
+      loadCurrentSong(randomMusic, current_index);
+      playSong();
+    } catch (error) {
+      log(`Failure to load data: ${error.message}`)
+    }
   };
 
   const loadSingleSong = (source, repeatOnce) => {
     if(repeatOnce){
-      audio.src = source[index].src;
+      audio.src = source[current_index].src;
       audio.loop = true;
       audio.play()
     }
