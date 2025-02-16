@@ -145,15 +145,23 @@ export const player = () => {
     audio.pause()
   };
 
-  const handlePlaySong = () => {
-    if(!playing) {
-      playing = true;
-      playSong()
-    }else {
-      playing = false;
-      pauseSong()
+  // allows the browser to load multimedia
+  // elements without pausing to load more data
+  eventHandler(audio, 'canplaythrough', debounce(() => {
+    spinnerContainer.style.display = 'none';
+    
+    const handlePlaySong = () => {
+      if(!playing) {
+        playing = true;
+        playSong()
+      }else {
+        playing = false;
+        pauseSong()
+      }
     }
-  }
+
+    eventHandler(playBtn, 'click', debounce(() => handlePlaySong(), timeout));
+  }))
 
   const handlePrevSong = () => {
     current_index--;
@@ -310,13 +318,6 @@ export const player = () => {
       audio.play()
     }
   }
-
-  // allows the browser to load multimedia
-  // elements without pausing to load more data
-  const loadMultimediaElement = () => {
-    spinnerContainer.style.display = 'none';
-    audio.play()
-  };
   
   const createSVGElement = (url, element) => document.createElementNS(url, element);
 
@@ -338,20 +339,18 @@ export const player = () => {
   }
 
   // events
-  eventHandler(playBtn, 'click', debounce(() => handlePlaySong()), timeout);
-  eventHandler(forwardBtn, 'click', debounce(() => handleNextSong()), timeout);
-  eventHandler(backwardBtn, 'click', debounce(() => handlePrevSong()), timeout);
-  eventHandler(repeatBtn, 'click', debounce(() => handleRandomSong()), timeout);
-  eventHandler(volumeBtn, 'click', debounce(() => handleMuteSong()), timeout);
+  eventHandler(forwardBtn, 'click', debounce(() => handleNextSong(), timeout));
+  eventHandler(backwardBtn, 'click', debounce(() => handlePrevSong(), timeout));
+  eventHandler(repeatBtn, 'click', debounce(() => handleRandomSong(), timeout));
+  eventHandler(volumeBtn, 'click', debounce(() => handleMuteSong(), timeout));
 
   eventHandler(progressBar, 'click', updateProgressBar);
-  eventHandler(progressBar, 'mousemove', debounce((e) => mousedown && updateProgressBar(e)), timeout);
-  eventHandler(progressBar, 'mousedown', debounce(() => mousedown = true), timeout);
-  eventHandler(progressBar, 'mouseup', debounce(() => mousedown = false), timeout);
-  eventHandler(slider, 'change', debounce(() => volumeSlider()), timeout);
+  eventHandler(progressBar, 'mousemove', debounce((e) => mousedown && updateProgressBar(e), timeout));
+  eventHandler(progressBar, 'mousedown', debounce(() => mousedown = true, timeout));
+  eventHandler(progressBar, 'mouseup', debounce(() => mousedown = false, timeout));
+  eventHandler(slider, 'change', debounce(() => volumeSlider(), timeout));
 
   eventHandler(audio, 'timeupdate', seekTimeUpdate);
   eventHandler(audio, 'loadedmetadata', seekTimeUpdate);
   eventHandler(audio, 'ended', debounce(() => handleNextSong()));
-  eventHandler(audio, 'canplaythrough', debounce(() => loadMultimediaElement()));
 }
