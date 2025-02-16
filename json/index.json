@@ -4,14 +4,14 @@
       "artist": "chris brown",
       "song": "../assets/audio/residuals.mp3",
       "title": "residuals",
-      "poster": "../assets/images/poster-16.webp",
+      "poster": "../assets/images/poster-16.png",
       "album": "11:11"
     },
     {
       "artist": "jung kook",
       "song": "../assets/audio/standing-next-to-you.mp3",
       "title": "standing next to you",
-      "poster": "../assets/images/poster-18.jpg",
+      "poster": "../assets/images/poster-18.png",
       "album": "GOLDEN"
     },
     {
