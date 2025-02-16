@@ -1,6 +1,27 @@
 {
   "playlist": [
     {
+      "artist": "chris brown",
+      "song": "../assets/audio/residuals.mp3",
+      "title": "residuals",
+      "poster": "../assets/images/poster-16.webp",
+      "album": "11:11"
+    },
+    {
+      "artist": "jung kook",
+      "song": "../assets/audio/standing-next-to-you.mp3",
+      "title": "standing next to you",
+      "poster": "../assets/images/poster-18.jpg",
+      "album": "GOLDEN"
+    },
+    {
+      "artist": "jhené aiko",
+      "song": "../assets/audio/while-we_re-young.mp3",
+      "title": "while we're young",
+      "poster": "../assets/images/poster-17.png",
+      "album": "trip"
+    },
+    {
       "artist": "50 cent ft. nate dogg",
       "song": "../assets/audio/21-questions.mp3",
       "title": "21 questions",
@@ -104,6 +125,27 @@
       "title": "poppin' them thangs",
       "poster": "../assets/images/poster-15.png",
       "album": "beg for mercy"
+    },
+    {
+      "artist": "chris brown ft. davido & lojay",
+      "song": "../assets/audio/sensational",
+      "title": "sensational",
+      "poster": "../assets/images/poster-16.webp",
+      "album": "11:11"
+    },
+    {
+      "artist": "ella mai",
+      "song": "../assets/audio/boo_d-up.mp3",
+      "title": "boo'd up",
+      "poster": "../assets/images/poster-7.png",
+      "album": "ella mai"
+    },
+    {
+      "artist": "michael jackson",
+      "song": "../assets/audio/baby-be-mine.mp3",
+      "title": "baby be mine",
+      "poster": "../assets/images/poster-19.png",
+      "album": "thriller"
     }
   ]
 }
